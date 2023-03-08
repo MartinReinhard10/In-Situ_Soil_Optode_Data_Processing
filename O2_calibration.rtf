@@ -1,0 +1,91 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 import matplotlib.pyplot as plt\
+import seaborn as sns\
+import numpy as np\
+import pandas as pd\
+from lmfit import Model\
+import datetime\
+\
+fs = 10\
+\
+\
+# load data\
+file = '/Users/au652733/Python/project_Theresa/data/202302_new-data-humidity-NH3-study.xlsx'\
+dic_data = pd.read_excel(file, sheet_name=None)\
+\
+ls_columns = ['Picarro_ppb', 'relative_hum_(%)', 'median_ratio_all', 'median_std_all']\
+df1 = pd.concat([dic_data[k][ls_columns].set_index('Picarro_ppb') for k in dic_data.keys()])\
+df2 = df1[df1['relative_hum_(%)'] == 30].dropna().sort_index()\
+df = df2.groupby(by=df2.index).mean()\
+\
+# plot data for initial investigation\
+fig, ax= plt.subplots(figsize=(5,3.5))\
+ax.set_xlabel('concentration points', fontsize=fs*0.9), ax.set_ylabel('fluorescence intensity ratio', fontsize=fs*.9)\
+ax.set_title('Simplified Stern-Volmer for Calibration', loc='left', fontsize=fs)\
+ax.scatter(df.index, df['median_ratio_all']/df['median_ratio_all'].min(), marker='*')\
+\
+sns.despine(), plt.tight_layout()\
+plt.show()\
+\
+\
+# define simplified Stern-Volmer function\
+def _sternvolmer_simple(x, f, k):\
+    """\
+    fitting function according to the common two site model. In general, x represents the pO2 or pCO2 content, whereas\
+    m, k and f are the common fitting parameters\
+    :param x:   list\
+    :param k:   np.float\
+    :param f:   np.float\
+    :return:\
+    """\
+    # Int0/Int\
+    int_ratio = 1 / (f / (1. + k*x) + (1.-f))\
+    return int_ratio\
+\
+\
+# make your function a model to be used by lmfit\
+simply_sv = Model(_sternvolmer_simple)\
+\
+# set initial parameter\
+params_sens = simply_sv.make_params(k=0.165, f=0.887) # from previous calibrations approximately known\
+params_sens['k'].min = 0.\
+params_sens['f'].max = 1.\
+\
+# use i0/i data for fit and re-calculate i afterwards\
+# full concentration range\
+ytofit_sens = df['median_ratio_all'].to_numpy()/df['median_ratio_all'].min()\
+xtofit_sens = df.index.to_numpy()\
+result = simply_sv.fit(ytofit_sens, params_sens, x=xtofit_sens, nan_policy='omit')\
+\
+\
+\
+# to optimize the fit (and be sure of the parameter) >> 2nd round with one parameter fixed\
+params_sens2 = params_sens.copy()\
+params_sens2['k'].value = result.best_values['k']\
+params_sens2['k'].vary = False\
+params_sens2['f'].value = result.best_values['f']\
+\
+params_sens2['f'].min = 0.\
+params_sens2['f'].max = 1.\
+result2 = simply_sv.fit(ytofit_sens, params_sens2, x=xtofit_sens, nan_policy='omit')\
+\
+df_bestFit_preSens_norm = pd.DataFrame(1 / result2.best_fit, index=xtofit_sens)\
+df_bestFit_preSens = pd.DataFrame(df.loc[0, 'median_ratio_all'] / result2.best_fit, index=xtofit_sens)\
+result2.best_values\
+print(result2)\
+result2.plot()\
+plt.show()\
+\
+# SAVE THE RESULT\
+# best fit for parameter done... save report in case you want\
+now = datetime.datetime.now()\
+time_now = now.strftime('%Y%m%d-%H%M%S')\
+# save fit report to a file:\
+with open(time_now + '_fit_result.txt', 'w') as fh:\
+    fh.write(result2.fit_report())}
