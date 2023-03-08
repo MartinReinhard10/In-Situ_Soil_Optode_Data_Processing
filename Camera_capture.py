@@ -9,3 +9,5 @@ picam2.start_preview(Preview.QTGL)
 picam2.start()
 time.sleep(5)
 picam2.capture_file('/home/martin/Desktop/test.jpg')
+
+#Hello
