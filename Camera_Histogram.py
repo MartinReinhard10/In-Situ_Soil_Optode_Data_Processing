@@ -48,13 +48,14 @@ print(picam2.capture_metadata())
 
 picam2.stop_preview()
 
+#plt.imshow(raw)
 
 # Min-Max Normalize 12-bit sensor data to fit 16-bit dataframe
-norm_image = np.zeros((3040,4064))
-norm_raw = cv2.normalize(raw,norm_image,0,65535,cv2.NORM_MINMAX,-1)
+#norm_image = np.zeros((3040,4064))
+#norm_raw = cv2.normalize(raw,norm_image,0,65535,cv2.NORM_MINMAX,-1)
 #print(norm_raw)
 
-raw_crop = norm_raw[0:3040, 0:4056] # Remove padding from each row of pixels
+#raw_crop = norm_raw[0:3040, 0:4056] # Remove padding from each row of pixels
 center_crop = raw[1000:2000, 2000:3000]
 
 #tifffile.imwrite('/home/martin/Desktop/raw_image.tiff', center_crop) #Save RAW image
@@ -64,11 +65,12 @@ red = center_crop[1::2,1::2]
 green1 = center_crop[0::2,1::2]
 green2 = center_crop[1::2,0::2]
 green = np.add(green1,green2)/2
-blue = raw_crop[0::2,0::2]
+blue = center_crop[0::2,0::2]
+
 
 #Make histogram for red and green channel # Set camera controls to have good pixel saturation
-Colors=("red","green")
-Channel_ids=(red,green)
+Colors=("red","green","blue")
+Channel_ids=(red,green,blue)
 for channel_id, c in zip(Channel_ids,Colors):
     histogram, bin_edges=np.histogram(channel_id,bins=4095, range=(0,4095))
     plt.plot(bin_edges[0:-1],histogram,color=c)
