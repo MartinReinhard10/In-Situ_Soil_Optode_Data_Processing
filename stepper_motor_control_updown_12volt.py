@@ -8,8 +8,8 @@ GPIO.setwarnings(False)
 # Define pin numbers for each motor
 VERTICAL_STEP_PIN = 27
 VERTICAL_DIR_PIN = 17
-TOP_ENDSTOP_PIN = 23
-BOTTOM_ENDSTOP_PIN = 24
+TOP_ENDSTOP_PIN = 19
+BOTTOM_ENDSTOP_PIN = 21
 ROTATE_STEP_PIN = 9
 ROTATE_DIR_PIN = 10
 
@@ -30,7 +30,7 @@ UP = GPIO.LOW
 CW = GPIO.HIGH
 CCW = GPIO.LOW
 
-VERTICAL_DIRECTION = DOWN 
+VERTICAL_DIRECTION = DOWN
 ROTATE_DIRECTION = CCW 
 
 # Move motor one step
@@ -44,11 +44,11 @@ def step(step_pin):
 def move_vertical(steps):
     GPIO.output(VERTICAL_DIR_PIN, VERTICAL_DIRECTION)
     for i in range(steps):
-        if VERTICAL_DIRECTION == DOWN and GPIO.input(TOP_ENDSTOP_PIN) == GPIO.LOW:
-            print("Top endstop reached")
-            break
-        elif VERTICAL_DIRECTION == UP and GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.LOW:
+        if VERTICAL_DIRECTION == DOWN and GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.LOW:
             print("Bottom endstop reached")
+            break
+        elif VERTICAL_DIRECTION == UP and GPIO.input(TOP_ENDSTOP_PIN) == GPIO.LOW:
+            print("Top endstop reached")
             break
         step(VERTICAL_STEP_PIN)
 
@@ -59,12 +59,12 @@ def rotate(steps):
         step(ROTATE_STEP_PIN)
 
 # Example usage
-num_steps = 200
-rotate_steps = 200
+num_steps = 1200
+rotate_steps = 817
 step_speed = 0.0005
 
 # Move vertical motor a certain number of steps or until an endstop is triggered
-move_vertical(num_steps)
+#move_vertical(num_steps)
 
 # Rotate motor a certain number of steps
 rotate(rotate_steps)

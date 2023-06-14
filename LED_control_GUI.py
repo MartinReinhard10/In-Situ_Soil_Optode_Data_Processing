@@ -29,7 +29,7 @@ class Application(tk.Frame):
         #ACTIVE FOR TWO SEC.
         GPIO.output(led, GPIO.HIGH)
 
-        sleep(2)
+        sleep(5)
 
         GPIO.output(led, GPIO.LOW)
 

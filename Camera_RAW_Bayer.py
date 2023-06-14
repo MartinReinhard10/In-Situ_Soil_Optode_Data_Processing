@@ -1,9 +1,10 @@
 import time
 from picamera2 import Picamera2, Preview
 from picamera2.controls import Controls
-import cv2
 import numpy as np
+import cv2
 import matplotlib.pyplot as plt
+import tifffile
 
 
 picam2 = Picamera2()
@@ -36,12 +37,12 @@ picam2.stop_preview()
 
 # Min-Max Normalize 12-bit sensor data to fit 16-bit dataframe
 norm_image = np.zeros((3040,4064))
-norm_raw = cv2.normalize(raw,norm_image,0,65535,cv2.NORM_MINMAX,-1)
-print(norm_raw)
+#norm_raw = cv2.normalize(raw,norm_image,0,65535,cv2.NORM_MINMAX,-1)
+#print(norm_raw)
 
-raw_crop = norm_raw[0:3040, 0:4056] # Remove padding from each row of pixels
+raw_crop = raw[0:3040, 0:4056] # Remove padding from each row of pixels
 
-cv2.imwrite('/home/martin/Desktop/raw_image.tiff', norm_raw) #Save RAW image
+tifffile.imwrite('/home/martin/Desktop/Panorama/raw_image_10.tiff', raw_crop) #Save RAW image
 
 #Get color channels in bayer order (BGGR)
 red =raw_crop[1::2,1::2]
@@ -50,11 +51,7 @@ green2 = raw_crop[1::2,0::2]
 green = np.add(green1,green2)/2
 blue = raw_crop[0::2,0::2]
 
-#Save images for each color in Bayer filter
-cv2.imwrite('/home/martin/Desktop/red_bayer.tiff',red)
-cv2.imwrite('/home/martin/Desktop/green_bayer.tiff',green1)
-cv2.imwrite('/home/martin/Desktop/blue_bayer.tiff',blue)
-print("Saved_images")
+
 
 
 
