@@ -10,6 +10,8 @@ import adafruit_dht
 import busio
 from adafruit_vl53l0x import VL53L0X
 
+#good
+
 picam2 = Picamera2()
 
 dhtDevice = adafruit_dht.DHT22(board.D8)

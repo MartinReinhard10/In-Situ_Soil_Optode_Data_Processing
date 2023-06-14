@@ -59,12 +59,12 @@ def rotate(steps):
         step(ROTATE_STEP_PIN)
 
 # Example usage
-num_steps = 500
-rotate_steps = 0
+num_steps = 1200
+rotate_steps = 817
 step_speed = 0.0005
 
 # Move vertical motor a certain number of steps or until an endstop is triggered
-move_vertical(num_steps)
+#move_vertical(num_steps)
 
 # Rotate motor a certain number of steps
 rotate(rotate_steps)
