@@ -2,6 +2,7 @@ import tkinter as tk
 import Live_Camera_Preview as LCP
 import Motor_Function as mf
 import Distance_sensor_Function as dsf
+import Temp_Humid_Function as thf
 
 # GUI Layout and function
 root = tk.Tk()
@@ -64,7 +65,19 @@ horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
 # Distance Sensor
 distance_label = tk.Label(motor_control, text="Distance from Bottom: ")
 distance_label.grid(row=4,column=0,padx=1,pady=1)
-dsf.measure_distance(distance_label)
+dsf.measure_distance()
+
+# Temperature and humidity 
+temp_humid_frame = tk.Frame(main_frame,width=100,height=100)
+temp_humid_frame.grid(row=5,column=1,padx=1,pady=1)
+
+temp_label = tk.Label(temp_humid_frame, text="Temperature:")
+temp_label.grid(row=1,column=1,padx=1,pady=1)
+humidity_label = tk.Label(temp_humid_frame, text="Humidity:")
+humidity_label.grid(row=1,column=3,padx=1,pady=1)
+thf.update_temp_values(temp_label, humidity_label)
+
+
 
 # Start GUI
 root.mainloop()
