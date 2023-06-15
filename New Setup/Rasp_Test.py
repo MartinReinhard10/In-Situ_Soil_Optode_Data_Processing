@@ -1,4 +1,4 @@
-from tkinter import tk
+import tkinter as tk
 import time
 import numpy as np
 from picamera2 import Picamera2, Preview
@@ -9,10 +9,8 @@ import board
 import adafruit_dht
 import busio
 from adafruit_vl53l0x import VL53L0X
-import functions
+import Live_Camera_Preview as LCP
 
-#Intialize Camera
-picam2 = Picamera2()
 
 # GUI Layout and function
 root = tk.Tk()
@@ -29,11 +27,11 @@ preview_frame= tk.Frame(root,width=200,height=100)
 preview_frame.grid(row=0,column=0,padx=5,pady=5)
 
 # Button to start the camera preview
-preview_button = tk.Button(preview_frame, text="Start Live Preview", command= function.start_preview())
+preview_button = tk.Button(preview_frame, text="Start Live Preview", command= LCP.start_preview)
 preview_button.pack()
 
 # Button to stop the camera preview
-stop_preview_button = tk.Button(preview_frame,text="Stop Live Preview", command=function.stop_preview())
+stop_preview_button = tk.Button(preview_frame,text="Stop Live Preview", command=LCP.stop_preview)
 stop_preview_button.pack()
 
 # Start GUI
