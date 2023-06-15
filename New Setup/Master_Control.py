@@ -1,4 +1,4 @@
-from tkinter import tk
+import tkinter as tk
 import numpy as np
 import RPi.GPIO as GPIO
 import board
@@ -8,10 +8,6 @@ from adafruit_vl53l0x import VL53L0X
 import Live_Camera_Preview as lcp
 import Motor_Function as mf
 
-
-
-#Intialize Camera
-picam2 = Picamera2()
 
 #Intialize Temperature Sensor
 dhtDevice = adafruit_dht.DHT22(board.D8)

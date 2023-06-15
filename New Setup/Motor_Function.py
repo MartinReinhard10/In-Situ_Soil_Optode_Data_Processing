@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-from Master_Control import speed_scale, vertical_steps_entry, horizontal_steps_entry
+
 
 # Set up GPIO pins in BCM mode
 GPIO.setmode(GPIO.BCM)
@@ -68,16 +68,16 @@ def rotate_RIGHT(steps):
         step(ROTATE_STEP_PIN)
 
 # Set the number of steps for VERTICAL
-def set_steps(steps_v):
+def set_steps_vertical(steps_v):
     global num_steps_vertical
-    num_steps_vertical = int(vertical_steps_entry.get())
+    num_steps_vertical = int(steps_v)
 
 # Set the number of steps for HORIZONTAL
-def set_steps(steps_h):
+def set_steps_horizontal(steps_h):
     global num_steps_horizontal
-    num_steps_horizontal = int(horizontal_steps_entry.get())
+    num_steps_horizontal = int(steps_h)
 
 # Set the step speed
 def set_step_speed(speed):
     global step_speed
-    step_speed = speed_scale.get()
+    step_speed = speed
