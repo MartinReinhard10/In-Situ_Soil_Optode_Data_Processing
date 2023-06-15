@@ -65,7 +65,7 @@ horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
 # Distance Sensor
 distance_label = tk.Label(motor_control, text="Distance from Bottom: ")
 distance_label.grid(row=4,column=0,padx=1,pady=1)
-dsf.measure_distance()
+dsf.measure_distance(distance_label)
 
 # Temperature and humidity 
 temp_humid_frame = tk.Frame(main_frame,width=100,height=100)

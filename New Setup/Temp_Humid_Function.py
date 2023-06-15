@@ -4,8 +4,8 @@ import board
 #Intialize Temperature Sensor
 dhtDevice = adafruit_dht.DHT22(board.D8)
 
-        
-def update_temp_values(label_t,label_h):
+       
+def update_temp_values(label_t, label_h):
     try:
         temperature_c = dhtDevice.temperature
         humidity = dhtDevice.humidity
@@ -15,10 +15,6 @@ def update_temp_values(label_t,label_h):
         label_t.config(text="-")
         label_h.config(text="-")
         print(error.args[0])
-    else:
-        label_t.config(text="-")
-        label_h.config(text="-")
-    
-        # Update every 2 seconds
-    label_t.after(2000, update_temp_values, label_t)
-    label_h.after(2000, update_temp_values, label_h)
+
+    # Update every 2 seconds
+    label_t.after(2000, update_temp_values, label_t, label_h)
