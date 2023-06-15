@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import Live_Camera_Preview as LCP
+import Live_Camera_Preview as lcp
 import Motor_Function as mf
 import Distance_sensor_Function as dsf
 import Temp_Humid_Function as thf
