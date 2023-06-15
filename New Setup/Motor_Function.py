@@ -1,0 +1,83 @@
+import RPi.GPIO as GPIO
+import time
+from Master_Control import speed_scale, vertical_steps_entry, horizontal_steps_entry
+
+# Set up GPIO pins in BCM mode
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+# Define pin numbers for each motor
+VERTICAL_STEP_PIN = 27
+VERTICAL_DIR_PIN = 17
+TOP_ENDSTOP_PIN = 19
+BOTTOM_ENDSTOP_PIN = 21
+ROTATE_STEP_PIN = 9
+ROTATE_DIR_PIN = 10
+
+# Set up pins as outputs
+GPIO.setup(VERTICAL_STEP_PIN, GPIO.OUT)
+GPIO.setup(VERTICAL_DIR_PIN, GPIO.OUT)
+GPIO.setup(ROTATE_STEP_PIN, GPIO.OUT)
+GPIO.setup(ROTATE_DIR_PIN, GPIO.OUT)
+
+# Set up endstops as inputs
+GPIO.setup(TOP_ENDSTOP_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(BOTTOM_ENDSTOP_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+# Set motor direction
+DOWN = GPIO.HIGH
+UP = GPIO.LOW
+LEFT = GPIO.HIGH
+RIGHT = GPIO.LOW
+
+# Move motor in steps
+def step(step_pin):
+    GPIO.output(step_pin, GPIO.HIGH)
+    time.sleep(step_speed)
+    GPIO.output(step_pin, GPIO.LOW)
+    time.sleep(step_speed)
+
+# Move vertical motor UP a certain number of steps or until an endstop is triggered
+def move_vertical_UP(steps):
+    GPIO.output(VERTICAL_DIR_PIN, UP)
+    for i in range(steps):
+        if  GPIO.input(TOP_ENDSTOP_PIN) == GPIO.LOW:
+            print("Top endstop reached")
+            break
+        step(VERTICAL_STEP_PIN)
+
+# Move vertical motor DOWN a certain number of steps or until an endstop is triggered
+def move_vertical_DOWN(steps):
+    GPIO.output(VERTICAL_DIR_PIN, DOWN)
+    for i in range(steps):
+        if  GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.LOW:
+            print("Bottom endstop reached")
+            break
+        step(VERTICAL_STEP_PIN)
+
+# Rotate motor LEFT a certain number of steps
+def rotate_LEFT(steps):
+    GPIO.output(ROTATE_DIR_PIN, LEFT)
+    for i in range(steps):
+        step(ROTATE_STEP_PIN)
+    
+# Rotate motor RIGHT a certain number of steps
+def rotate_RIGHT(steps):
+    GPIO.output(ROTATE_DIR_PIN, RIGHT)
+    for i in range(steps):
+        step(ROTATE_STEP_PIN)
+
+# Set the number of steps for VERTICAL
+def set_steps(steps_v):
+    global num_steps_vertical
+    num_steps_vertical = int(vertical_steps_entry.get())
+
+# Set the number of steps for HORIZONTAL
+def set_steps(steps_h):
+    global num_steps_horizontal
+    num_steps_horizontal = int(horizontal_steps_entry.get())
+
+# Set the step speed
+def set_step_speed(speed):
+    global step_speed
+    step_speed = speed_scale.get()
