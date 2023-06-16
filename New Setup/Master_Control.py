@@ -86,9 +86,7 @@ camera_frame = tk.Frame(main_frame, width=200,height=200)
 camera_frame.grid(row=1,column=1,padx=1,pady=1)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=0,column=0,padx=1,pady=1)
 
-camera_frame = tk.Frame(main_frame, width=200,height=200)
-camera_frame.grid(row=1,column=1,padx=1,pady=1)
-camera_jpeg_button = tk.Button(camera_frame, text="Capture RAW Image", command= cf.capture_raw).grid(row=1,column=0,padx=1,pady=1)
+camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command= cf.capture_raw).grid(row=1,column=0,padx=1,pady=1)
 
 # Start GUI
 root.mainloop()
