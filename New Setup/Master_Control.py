@@ -1,5 +1,5 @@
 import tkinter as tk
-import Live_Camera_Preview as lcp
+import Camera_Function as cf
 import Motor_Function as mf
 import Distance_sensor_Function as dsf
 import Temp_Humid_Function as thf
@@ -25,11 +25,11 @@ preview_frame= tk.Frame(root,width=200,height=100)
 preview_frame.grid(row=0,column=0,padx=5,pady=5)
 
 # Button to start the camera preview
-preview_button = tk.Button(preview_frame, text="Start Live Preview", command= lcp.start_preview)
+preview_button = tk.Button(preview_frame, text="Start Live Preview", command= cf.start_preview)
 preview_button.pack()
 
 # Button to stop the camera preview
-stop_preview_button = tk.Button(preview_frame,text="Stop Live Preview", command=lcp.stop_preview)
+stop_preview_button = tk.Button(preview_frame,text="Stop Live Preview", command=cf.stop_preview)
 stop_preview_button.pack()
 
 #Manual motor control Frame
@@ -81,6 +81,13 @@ temp_label.grid(row=1,column=1,padx=1,pady=1)
 humidity_label = tk.Label(temp_humid_frame, text="Humidity:")
 humidity_label.grid(row=1,column=3,padx=1,pady=1)
 thf.update_temp_values(temp_label, humidity_label)
+
+# Camera functions
+camera_frame = tk.Frame(main_frame, width=200,height=200)
+camera_frame.grid(row=1,column=1,padx=1,pady=1)
+camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command=lambda: cf.capture_jpeg).grid(row=0,column=0,padx=1,pady=1)
+
+
 
 # Start GUI
 root.mainloop()
