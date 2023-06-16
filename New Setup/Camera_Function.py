@@ -3,6 +3,7 @@ from picamera2.controls import Controls
 from libcamera import Transform
 import matplotlib.pyplot as plt
 import time
+import numpy as np
 
 #Intialize Camera
 picam2 = Picamera2()
@@ -24,5 +25,8 @@ def capture_jpeg():
     picam2.start()
     time.sleep(3)
     image = picam2.capture_image()
+    picam2.stop()
     plt.imshow(image)
+    plt.show()
+    print("Image Ready")
 
