@@ -9,12 +9,11 @@ import time
 import numpy as np
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(led, GPIO.OUT)
+
 
 # Set LED Pin
 led = 23
-uv_led_ON=GPIO.output(led, GPIO.HIGH) 
-uv_led_OFF= GPIO.output(led, GPIO.LOW) 
+GPIO.setup(led, GPIO.OUT)
 
 # Intialize Camera for preview and RGB image
 picam2 = Picamera2()
@@ -62,12 +61,12 @@ def capture_raw(LED):
                                                      controls = controls, transform=Transform(hflip=1, vflip=1)) 
     picam2.configure(preview_config)
     if LED == True:
-        uv_led_ON
+        GPIO.output(led, GPIO.HIGH) 
         picam2.start() 
         time.sleep(2)
         #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
         raw = picam2.capture_array("raw").view(dtype="uint16")
-        uv_led_OFF
+        GPIO.output(led, GPIO.LOW) 
         print(picam2.capture_metadata())
         picam2.stop()
         plt.imshow(raw, cmap="gray")

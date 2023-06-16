@@ -85,7 +85,7 @@ thf.update_temp_values(temp_label, humidity_label)
 camera_frame = tk.Frame(main_frame, width=200,height=200)
 camera_frame.grid(row=1,column=1,padx=1,pady=1)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=0,column=0,padx=1,pady=1)
-camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command= cf.capture_raw(uv_state)).grid(row=1,column=0,padx=1,pady=1)
+camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state)).grid(row=1,column=0,padx=1,pady=1)
 
 #LED Control
 def toggle_uv_state():
@@ -100,9 +100,9 @@ def toggle_uv_state():
     
 led_frame = tk.Frame(main_frame,width=100,height=100)
 led_frame.grid(row=0,column=0,padx=1,pady=1)
-uv_label = tk.Label(led_frame,text="OFF").grid(row=0,column=1,padx=1,pady=1)
+uv_label = tk.Label(led_frame,text="OFF")
+uv_label.grid(row=0,column=1,padx=1,pady=1)
 uv_button =tk.Button(led_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=0,column=0,padx=1,pady=1)
-
 
 # Start GUI
 root.mainloop()
