@@ -8,12 +8,15 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 
-# Set LED Pin
-led = 23
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(led, GPIO.OUT)
 
-# Intialize Camera
+# Set LED Pin
+led = 23
+uv_led_ON=GPIO.output(led, GPIO.HIGH) 
+uv_led_OFF= GPIO.output(led, GPIO.LOW) 
+
+# Intialize Camera for preview and RGB image
 picam2 = Picamera2()
 camera_config = picam2.create_still_configuration(
     main={"size": (4056, 3040)},
@@ -26,7 +29,7 @@ picam2.configure(camera_config)
 
 # Preview
 def start_preview():
-    picam2.start_preview(Preview.QTGL, transform=Transform(hflip=1, vflip=1))
+    picam2.start_preview(Preview.QTGL)
     picam2.start()
 
 
@@ -42,41 +45,47 @@ def capture_jpeg():
     image = picam2.capture_image()
     picam2.stop()
     plt.imshow(image)
-    plt.show()
     print("Image Ready")
+    plt.show()
+    
 
 # Capture single RAW image
-def capture_raw():
+def capture_raw(LED):
     # Set camera controls
     controls = {"ExposureTime": 3000000, #microseconds
             "AnalogueGain":1.0, # 1 = ISO 100
             "AeEnable": False, # Auto exposure and Gain
             "AwbEnable": False,# Auto white Balance
             "FrameDurationLimits": (114,239000000)} #Min/Max frame duration
-
     # Setup config parameters
     preview_config = picam2.create_preview_configuration(raw={"size": picam2.sensor_resolution, "format": "SBGGR12",},
-                                                     controls = controls) 
+                                                     controls = controls, transform=Transform(hflip=1, vflip=1)) 
     picam2.configure(preview_config)
-
-    GPIO.output(led, GPIO.HIGH) # Turn on LED
-
-    picam2.start() # Start Camera
- 
-    time.sleep(2)
-
-    #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
-    raw = picam2.capture_array("raw").view(dtype="uint16")
-
-    GPIO.output(led, GPIO.LOW) # Turn off LED
-
-    #print(picam2.stream_configuration("raw"))
-    print(picam2.capture_metadata())
-
-    picam2.stop()
-
-    plt.imshow(raw, cmap="gray")
-    plt.show()
-    print("RAW Ready")
+    if LED == True:
+        uv_led_ON
+        picam2.start() 
+        time.sleep(2)
+        #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
+        raw = picam2.capture_array("raw").view(dtype="uint16")
+        uv_led_OFF
+        print(picam2.capture_metadata())
+        picam2.stop()
+        plt.imshow(raw, cmap="gray")
+        print("RAW Ready")
+        plt.show()
+    else:
+        picam2.start() 
+        time.sleep(2)
+        #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
+        raw = picam2.capture_array("raw").view(dtype="uint16")
+        print(picam2.capture_metadata())
+        picam2.stop()
+        plt.imshow(raw, cmap="gray")
+        print("RAW Ready")
+        plt.show()
+    
+    
+    
+    
     
  
