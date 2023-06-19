@@ -19,6 +19,13 @@ main_frame.grid(row=1, column=0,padx=10,pady=5)
 
 exit_button = tk.Button(root, text="Exit", command=exit_app).grid(row=2,column=0,padx=1,pady=1)
 
+# Message window
+def display_message(message):
+    text_widget.insert('end', message + '\n')
+    text_widget.see('end')  # Auto-scroll to the end
+text_widget = tk.Text(main_frame, height=5, width=40)
+text_widget.grid(row=6, column=0, padx=1, pady=1)
+
 #Preview Function#
 preview_frame= tk.Frame(root,width=200,height=100)
 preview_frame.grid(row=0,column=0,padx=5,pady=5)
@@ -119,7 +126,8 @@ def toggle_uv_state():
         uv_label.config(text="ON")
     
     uv_state = uv_label.cget("text") == "ON"
-    print(f"state: {uv_state}")
+
+    display_message(f"UV state: {uv_state}\n")
     
 uv_label = tk.Label(camera_frame,text="OFF")
 uv_label.grid(row=1,column=2,padx=1,pady=1)
@@ -128,5 +136,33 @@ uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state
 #Show Histogram 
 histogram_button = tk.Button(camera_frame, text= "Show Histogram", command=cf.display_histogram).grid(row=2,column=0, padx=1,pady=1 )
 
+#Capture Calibration images 
+
+def set_o2():
+    global o2_value
+    o2_value = o2_entry.get()
+    
+def set_image_number():
+    global num_images
+    num_images = int(num_images_entry.get())
+
+def capture_calibration_images():
+    cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state)
+    display_message("Calibration images captured.\n")
+
+o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=7,column=0,padx=1,pady=1)
+o2_entry = tk.Entry(camera_frame)
+o2_entry.grid(row=7,column=1,padx=1,pady=1)
+o2_entry.bind("<KeyRelease>", set_o2)
+num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=6,column=0, padx=1,pady=1 )
+num_images_entry = tk.Entry(camera_frame)
+num_images_entry.grid(row=6,column=1, padx=1,pady=1 )
+num_images_entry.bind("<KeyRelease>", set_image_number)
+capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images", command=capture_calibration_images).grid(row=8,column=0,padx=1,pady=1)
+
+
 # Start GUI
 root.mainloop()
+
+
+     

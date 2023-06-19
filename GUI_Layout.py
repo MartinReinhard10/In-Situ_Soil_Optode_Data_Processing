@@ -16,6 +16,11 @@ main_frame.grid(row=1, column=0,padx=10,pady=5)
 
 exit_button = tk.Button(root, text="Exit").grid(row=2,column=0,padx=1,pady=1)
 
+# Message window
+text_widget = tk.Text(main_frame, height=5, width=40)
+text_widget.grid(row=6, column=0, padx=1, pady=1)
+
+
 #Preview Function#
 preview_frame= tk.Frame(root,width=200,height=100)
 preview_frame.grid(row=0,column=0,padx=5,pady=5)
@@ -88,6 +93,9 @@ exposure_label = tk.Label(camera_frame, text= "Exposure Time:").grid(row=4,colum
 exposure_entry = tk.Entry(camera_frame)
 exposure_entry.grid(row=4,column=1,padx=1,pady=1)
 
+iso_label = tk.Label(camera_frame, text= "ISO:").grid(row=5,column=0,padx=1,pady=1)
+iso_entry = tk.Entry(camera_frame)
+iso_entry.grid(row=5,column=1,padx=1,pady=1)
 
 #LED Control
 def toggle_uv_state():
@@ -98,7 +106,11 @@ def toggle_uv_state():
         uv_label.config(text="ON")
     
     uv_state = uv_label.cget("text") == "ON"
-    print(f"state: {uv_state}")
+
+    message = f"state: {uv_state}\n"
+    text_widget.insert('end', message)
+    text_widget.see('end')
+    
     
 uv_label = tk.Label(camera_frame,text="OFF")
 uv_label.grid(row=1,column=2,padx=1,pady=1)
@@ -106,6 +118,16 @@ uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state
 
 #Show Histogram 
 histogram_button = tk.Button(camera_frame, text= "Show Histogram").grid(row=3,column=0, padx=1,pady=1 )
+
+
+
+o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=7,column=0,padx=1,pady=1)
+o2_entry = tk.Entry(camera_frame)
+o2_entry.grid(row=7,column=1,padx=1,pady=1)
+num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=6,column=0, padx=1,pady=1 )
+num_images_entry = tk.Entry(camera_frame)
+num_images_entry.grid(row=6,column=1, padx=1,pady=1 )
+capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images").grid(row=8,column=0,padx=1,pady=1)
 
 # Start GUI
 root.mainloop()
