@@ -105,7 +105,7 @@ uv_label.grid(row=0,column=1,padx=1,pady=1)
 uv_button =tk.Button(led_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=0,column=0,padx=1,pady=1)
 
 #Show Histogram 
-histogram_button = tk.Button(camera_frame, text= "Show Histogram", command=cf.dispaly_histogram).grid(row=2,column=0, padx=1,pady=1 )
+histogram_button = tk.Button(camera_frame, text= "Show Histogram", command=cf.display_histogram).grid(row=2,column=0, padx=1,pady=1 )
 
 # Start GUI
 root.mainloop()

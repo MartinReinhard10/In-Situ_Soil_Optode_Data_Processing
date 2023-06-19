@@ -49,11 +49,11 @@ def capture_jpeg():
     
 
 # Capture single RAW image
-def capture_raw(LED,exposure,ISO):
+def capture_raw(LED):
     global raw
     # Set camera controls
-    controls = {"ExposureTime": exposure, #microseconds
-            "AnalogueGain": ISO, # 1 = ISO 100
+    controls = {"ExposureTime": 3000000, #microseconds
+            "AnalogueGain": 1, # 1 = ISO 100
             "AeEnable": False, # Auto exposure and Gain
             "AwbEnable": False,# Auto white Balance
             "FrameDurationLimits": (114,239000000)} #Min/Max frame duration
@@ -86,50 +86,51 @@ def capture_raw(LED,exposure,ISO):
     
     #Display Histogram and pixel information of previous image
 
-    def display_histogram():
-         #Get color channels in bayer order (BGGR)
-        red = raw[1::2,1::2]
-        green1 = raw[0::2,1::2]
-        green2 = raw[1::2,0::2]
-        green = np.add(green1,green2)/2
-        blue = raw[0::2,0::2]
-        #Make histogram for red and green channel # Set camera controls to have good pixel saturation
-        Colors=("red","green","blue")
-        Channel_ids=(red,green,blue)
-        #Calculate the minimum and maximum value of the dataset
-        min_value_red = np.min(red)
-        min_value_green = np.min(green)
-        min_value_blue = np.min(blue)
-        max_value_red = np.max(red)
-        max_value_green = np.max(green) 
-        max_value_blue = np.max(blue)
-        min_value = min(min_value_red, min_value_green, min_value_blue)
-        max_value = max(max_value_red, max_value_green, max_value_blue)
-        for channel_id, c in zip(Channel_ids,Colors):
-            histogram, bin_edges=np.histogram(channel_id,bins=4095, range=(min_value,max_value))
-            plt.plot(bin_edges[0:-1], histogram, color=c, linewidth = 1)
-        plt.title("Red_Green histogram")
-        plt.xlabel("Pixel intensity")
-        plt.ylabel("Pixel Frequency")
-        plt.show()
-        #Get mean of pixel intensities for each channel
-        mean_red = np.mean(red)
-        mean_green = np.mean(green)
-        mean_blue = np.mean(blue)
-        print("Mean value of red:", mean_red)
-        print("Mean value of green:", mean_green)
-        print("Mean value of blue:", mean_blue)
-        #Get MAX pixel intensity for eavh channel
-        print("Max value of red:", max_value_red)
-        print("Max value of green:", max_value_green)
-        print("Max value of blue", max_value_blue)
-        # Count number of red and green pixels
-        num_red_pixels = np.count_nonzero(red)
-        num_green_pixels = np.count_nonzero(green)
-        num_blue_pixels =np.count_nonzero(blue)
-        print("Number of red pixels:", num_red_pixels)
-        print("Number of green pixels:", num_green_pixels)
-        print("Number of blue pixels:", num_blue_pixels)
+def display_histogram():
+    #Get color channels in bayer order (BGGR)
+    red = raw[1::2,1::2]
+    green1 = raw[0::2,1::2]
+    green2 = raw[1::2,0::2]
+    green = np.add(green1,green2)/2
+    blue = raw[0::2,0::2]
+    #Make histogram for red and green channel # Set camera controls to have good pixel saturation
+    Colors=("red","green","blue")
+    Channel_ids=(red,green,blue)
+    #Calculate the minimum and maximum value of the dataset
+    min_value_red = np.min(red)
+    min_value_green = np.min(green)
+    min_value_blue = np.min(blue)
+    max_value_red = np.max(red)
+    max_value_green = np.max(green) 
+    max_value_blue = np.max(blue)
+    min_value = min(min_value_red, min_value_green, min_value_blue)
+    max_value = max(max_value_red, max_value_green, max_value_blue)
+    for channel_id, c in zip(Channel_ids,Colors):
+        histogram, bin_edges=np.histogram(channel_id,bins=4095, range=(min_value,max_value))
+        plt.plot(bin_edges[0:-1], histogram, color=c, linewidth = 1)
+    plt.title("Red_Green histogram")
+    plt.xlabel("Pixel intensity")
+    plt.ylabel("Pixel Frequency")
+    plt.show()
+    #Get mean of pixel intensities for each channel
+    mean_red = np.mean(red)
+    mean_green = np.mean(green)
+    mean_blue = np.mean(blue)
+    print("Mean value of red:", mean_red)
+    print("Mean value of green:", mean_green)
+    print("Mean value of blue:", mean_blue)
+    #Get MAX pixel intensity for eavh channel
+    print("Max value of red:", max_value_red)
+    print("Max value of green:", max_value_green)
+    print("Max value of blue", max_value_blue)
+    # Count number of red and green pixels
+    num_red_pixels = np.count_nonzero(red)
+    num_green_pixels = np.count_nonzero(green)
+    num_blue_pixels =np.count_nonzero(blue)
+    print("Number of red pixels:", num_red_pixels)
+    print("Number of green pixels:", num_green_pixels)
+    print("Number of blue pixels:", num_blue_pixels)
+        
 
 
    

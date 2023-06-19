@@ -1,6 +1,7 @@
 import busio
 import board
 from adafruit_vl53l0x import VL53L0X
+import statistics
 
 # Set up the I2C and VL53L0X sensor
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -17,14 +18,14 @@ def measure_distance(label):
 
     # Check if we have collected 5 distance values
     if len(distance_values) == 5:
-        # Calculate the mean of the collected distance values
-        mean_distance = sum(distance_values) / len(distance_values)
+        # Calculate the median of the collected distance values with offset (39 mm)
+        median_distance = statistics.median(distance_values) - 39
         
         # Clear the list for the next 5 measurements
         distance_values.clear()
         
         # Update the label with the mean distance value
-        label.config(text="Mean distance from bottom: {} mm".format(mean_distance))
+        label.config(text="Distance from bottom: {} mm".format(median_distance))
 
     # Schedule the next measurement after 1 second
     label.after(1000, measure_distance, label)
