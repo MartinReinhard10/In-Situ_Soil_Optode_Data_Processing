@@ -90,16 +90,20 @@ camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=la
 # Camera Settings: Exposure and ISO
 def set_exposure(exposure):
      global exposure_time
-     exposure_time = exposure_entry.get()
+     exposure_time_get = exposure_entry.get() 
+     exposure_time = int(float(exposure_time_get) * 10E5)
+     print(f"exposure: {exposure_time}")
 
-exposure_label = tk.Label(camera_frame, text= "Exposure Time:").grid(row=4,column=0,padx=1,pady=1)     
+exposure_label = tk.Label(camera_frame, text= "Exposure Time (seconds):").grid(row=4,column=0,padx=1,pady=1)     
 exposure_entry = tk.Entry(camera_frame)
 exposure_entry.grid(row=4,column=1,padx=1,pady=1)
 exposure_entry.bind("<KeyRelease>", set_exposure)
 
 def set_iso(iso):
      global iso_value
-     iso_value = iso_entry.get()
+     iso_value_get = iso_entry.get()
+     iso_value = int(iso_value_get)
+     print(f"iso: {iso_value}")
 
 iso_label = tk.Label(camera_frame, text= "ISO:").grid(row=5,column=0,padx=1,pady=1)
 iso_entry = tk.Entry(camera_frame)
@@ -118,8 +122,8 @@ def toggle_uv_state():
     print(f"state: {uv_state}")
     
 uv_label = tk.Label(camera_frame,text="OFF")
-uv_label.grid(row=1,column=1,padx=1,pady=1)
-uv_button =tk.Button(camera_frame_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=0,column=0,padx=1,pady=1)
+uv_label.grid(row=1,column=2,padx=1,pady=1)
+uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=1,column=1,padx=1,pady=1)
 
 #Show Histogram 
 histogram_button = tk.Button(camera_frame, text= "Show Histogram", command=cf.display_histogram).grid(row=2,column=0, padx=1,pady=1 )
