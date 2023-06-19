@@ -99,7 +99,8 @@ def set_exposure(exposure):
      global exposure_time
      exposure_time_get = exposure_entry.get() 
      exposure_time = int(float(exposure_time_get) * 10E5)
-     print(f"exposure: {exposure_time}")
+     display_message(f"exposure: {exposure_time}\n")
+     
 
 exposure_label = tk.Label(camera_frame, text= "Exposure Time (seconds):").grid(row=4,column=0,padx=1,pady=1)     
 exposure_entry = tk.Entry(camera_frame)
@@ -110,7 +111,7 @@ def set_iso(iso):
      global iso_value
      iso_value_get = iso_entry.get()
      iso_value = int(iso_value_get)
-     print(f"iso: {iso_value}")
+     display_message(f"ISO: {iso_value}\n")
 
 iso_label = tk.Label(camera_frame, text= "ISO:").grid(row=5,column=0,padx=1,pady=1)
 iso_entry = tk.Entry(camera_frame)
@@ -138,17 +139,20 @@ histogram_button = tk.Button(camera_frame, text= "Show Histogram", command=cf.di
 
 #Capture Calibration images 
 
-def set_o2():
+def set_o2(o2_trigger):
     global o2_value
     o2_value = o2_entry.get()
+    display_message(f"O2 %: {o2_value}\n")
     
-def set_image_number():
+def set_image_number(image_number_trigger):
     global num_images
     num_images = int(num_images_entry.get())
+    display_message(f"number of images: {num_images}\n")
 
-def set_delay():
+def set_delay(delay_trigger):
     global delay_time
-    delay_time = int()
+    delay_time = int(delay_time_entry.get())
+    display_message(f"Delay time: {delay_time}\n")
 
 def capture_calibration_images():
     cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state, delay_time)
@@ -158,7 +162,7 @@ o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=7,column=0,
 o2_entry = tk.Entry(camera_frame)
 o2_entry.grid(row=7,column=1,padx=1,pady=1)
 o2_entry.bind("<KeyRelease>", set_o2)
-delay_time_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=8,column=0,padx=1,pady=1)
+delay_time_label = tk.Label(camera_frame, text="Set Delay Between Images:").grid(row=8,column=0,padx=1,pady=1)
 delay_time_entry = tk.Entry(camera_frame)
 delay_time_entry.grid(row=8,column=1,padx=1,pady=1)
 delay_time_entry.bind("<KeyRelease>", set_delay)
