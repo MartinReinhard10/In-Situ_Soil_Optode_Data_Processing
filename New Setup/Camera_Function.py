@@ -49,11 +49,11 @@ def capture_jpeg():
     
 
 # Capture single RAW image
-def capture_raw(LED):
+def capture_raw(LED, exposure, iso):
     global raw
     # Set camera controls
-    controls = {"ExposureTime": 3000000, #microseconds
-            "AnalogueGain": 1, # 1 = ISO 100
+    controls = {"ExposureTime": exposure, #microseconds
+            "AnalogueGain": iso, # 1 = ISO 100
             "AeEnable": False, # Auto exposure and Gain
             "AwbEnable": False,# Auto white Balance
             "FrameDurationLimits": (114,239000000)} #Min/Max frame duration

@@ -85,7 +85,26 @@ thf.update_temp_values(temp_label, humidity_label)
 camera_frame = tk.Frame(main_frame, width=200,height=200)
 camera_frame.grid(row=1,column=1,padx=1,pady=1)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=0,column=0,padx=1,pady=1)
-camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state,)).grid(row=1,column=0,padx=1,pady=1)
+camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=1,column=0,padx=1,pady=1)
+
+# Camera Settings: Exposure and ISO
+def set_exposure(exposure):
+     global exposure_time
+     exposure_time = exposure_entry.get()
+
+exposure_label = tk.Label(camera_frame, text= "Exposure Time:").grid(row=4,column=0,padx=1,pady=1)     
+exposure_entry = tk.Entry(camera_frame)
+exposure_entry.grid(row=4,column=1,padx=1,pady=1)
+exposure_entry.bind("<KeyRelease>", set_exposure)
+
+def set_iso(iso):
+     global iso_value
+     iso_value = iso_entry.get()
+
+iso_label = tk.Label(camera_frame, text= "ISO:").grid(row=5,column=0,padx=1,pady=1)
+iso_entry = tk.Entry(camera_frame)
+iso_entry.grid(row=5,column=1,padx=1,pady=1)
+iso_entry.bind("<KeyRelease>", set_iso)
 
 #LED Control
 def toggle_uv_state():
@@ -98,11 +117,9 @@ def toggle_uv_state():
     uv_state = uv_label.cget("text") == "ON"
     print(f"state: {uv_state}")
     
-led_frame = tk.Frame(main_frame,width=100,height=100)
-led_frame.grid(row=0,column=0,padx=1,pady=1)
-uv_label = tk.Label(led_frame,text="OFF")
-uv_label.grid(row=0,column=1,padx=1,pady=1)
-uv_button =tk.Button(led_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=0,column=0,padx=1,pady=1)
+uv_label = tk.Label(camera_frame,text="OFF")
+uv_label.grid(row=1,column=1,padx=1,pady=1)
+uv_button =tk.Button(camera_frame_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=0,column=0,padx=1,pady=1)
 
 #Show Histogram 
 histogram_button = tk.Button(camera_frame, text= "Show Histogram", command=cf.display_histogram).grid(row=2,column=0, padx=1,pady=1 )

@@ -84,6 +84,11 @@ camera_frame.grid(row=1,column=1,padx=1,pady=1)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image").grid(row=0,column=0,padx=1,pady=1)
 camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image").grid(row=1,column=0,padx=1,pady=1)
 
+exposure_label = tk.Label(camera_frame, text= "Exposure Time:").grid(row=4,column=0,padx=1,pady=1)
+exposure_entry = tk.Entry(camera_frame)
+exposure_entry.grid(row=4,column=1,padx=1,pady=1)
+
+
 #LED Control
 def toggle_uv_state():
     global uv_state
@@ -95,9 +100,9 @@ def toggle_uv_state():
     uv_state = uv_label.cget("text") == "ON"
     print(f"state: {uv_state}")
     
-uv_label = tk.Label(camera_frame,text="OFF", fg="red")
-uv_label.grid(row=2,column=1,padx=1,pady=1)
-uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=2,column=0,padx=1,pady=1)
+uv_label = tk.Label(camera_frame,text="OFF")
+uv_label.grid(row=1,column=2,padx=1,pady=1)
+uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=1,column=1,padx=1,pady=1)
 
 #Show Histogram 
 histogram_button = tk.Button(camera_frame, text= "Show Histogram").grid(row=3,column=0, padx=1,pady=1 )
