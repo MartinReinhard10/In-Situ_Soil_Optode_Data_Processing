@@ -146,19 +146,27 @@ def set_image_number():
     global num_images
     num_images = int(num_images_entry.get())
 
+def set_delay():
+    global delay_time
+    delay_time = int()
+
 def capture_calibration_images():
-    cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state)
+    cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state, delay_time)
     display_message("Calibration images captured.\n")
 
 o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=7,column=0,padx=1,pady=1)
 o2_entry = tk.Entry(camera_frame)
 o2_entry.grid(row=7,column=1,padx=1,pady=1)
 o2_entry.bind("<KeyRelease>", set_o2)
+delay_time_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=8,column=0,padx=1,pady=1)
+delay_time_entry = tk.Entry(camera_frame)
+delay_time_entry.grid(row=8,column=1,padx=1,pady=1)
+delay_time_entry.bind("<KeyRelease>", set_delay)
 num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=6,column=0, padx=1,pady=1 )
 num_images_entry = tk.Entry(camera_frame)
 num_images_entry.grid(row=6,column=1, padx=1,pady=1 )
 num_images_entry.bind("<KeyRelease>", set_image_number)
-capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images", command=capture_calibration_images).grid(row=8,column=0,padx=1,pady=1)
+capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images", command=capture_calibration_images).grid(row=9,column=0,padx=1,pady=1)
 
 
 # Start GUI
