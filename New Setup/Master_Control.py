@@ -12,19 +12,21 @@ def exit_app():
 # GUI Layout and function
 root = tk.Tk()
 root.title("Control For Optode Platform")
-root.config(bg="orange")
+root.config()
 
-main_frame = tk.Frame(root, width=200, height=400)
-main_frame.grid(row=1, column=0,padx=10,pady=5)
+main_frame = tk.Frame(root, width=1000, height=1000)
+main_frame.grid(row=0, column=0,padx=20,pady=20)
 
-exit_button = tk.Button(root, text="Exit", command=exit_app).grid(row=2,column=0,padx=1,pady=1)
+exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20)).grid(row=10,column=10,padx=5,pady=5)
 
 # Message window
 def display_message(message):
     text_widget.insert('end', message + '\n')
     text_widget.see('end')  # Auto-scroll to the end
-text_widget = tk.Text(main_frame, height=5, width=40)
-text_widget.grid(row=6, column=0, padx=1, pady=1)
+
+text_widget_label = tk.Label(main_frame, text= "Status Box:", font="Arial").grid(row=0,column=3,padx=5,pady=5)
+text_widget = tk.Text(main_frame, height=20, width=20)
+text_widget.grid(row=1, column=3, padx=2, pady=5)
 
 #Preview Function#
 preview_frame= tk.Frame(root,width=200,height=100)
@@ -74,6 +76,9 @@ horizontal_steps_entry = tk.Entry(motor_control)
 horizontal_steps_entry.grid(row=3,column=4,padx=1,pady=1)
 horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
 
+#Move "HOME" 
+home_button = tk.Button(motor_control, text="Move to Bottom Position").grid(row=6,column=0,padx=10,pady=10)
+
 # Distance Sensor
 distance_label = tk.Label(motor_control, text="Distance from Bottom: ")
 distance_label.grid(row=4,column=0,padx=1,pady=1)
@@ -89,8 +94,9 @@ humidity_label.grid(row=1,column=3,padx=1,pady=1)
 thf.update_temp_values(temp_label, humidity_label)
 
 # Camera functions
-camera_frame = tk.Frame(main_frame, width=200,height=200)
-camera_frame.grid(row=1,column=1,padx=1,pady=1)
+camera_frame = tk.Frame(main_frame, width=200,height=500)
+camera_frame.grid(row=1,column=2,padx=5,pady=5)
+camera_frame_title = tk.Label(main_frame, text= "Camera Functions:",font="Arial").grid(row=0,column=2,padx=5,pady=5)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=0,column=0,padx=1,pady=1)
 camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=1,column=0,padx=1,pady=1)
 

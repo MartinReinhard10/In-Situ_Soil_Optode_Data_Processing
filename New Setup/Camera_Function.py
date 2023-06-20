@@ -185,7 +185,6 @@ def capture_calibration(o2, num_images, exposure, iso, LED, delay):
             # If the filename exists, add a number to the suffix and try again
                 filename = f'{base_filename}_{date_str}_{count}_air_sat{o2}.tiff'
                 count += 1
-                
             # Save the image with the updated filename
             tifffile.imwrite(os.path.join(save_dir, filename), raw_crop)
 

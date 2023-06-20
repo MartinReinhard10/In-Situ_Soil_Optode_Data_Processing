@@ -80,3 +80,9 @@ def set_steps_horizontal(steps_h):
 def set_step_speed(speed):
     global step_speed
     step_speed = speed
+
+#Move HOME, Bottom position
+def move_home():
+    GPIO.output(VERTICAL_DIR_PIN, DOWN)
+    while GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.HIGH:
+        step(VERTICAL_STEP_PIN)
