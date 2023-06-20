@@ -17,7 +17,7 @@ root.config()
 main_frame = tk.Frame(root, width=1000, height=1000)
 main_frame.grid(row=0, column=0,padx=20,pady=20)
 
-exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20)).grid(row=10,column=10,padx=5,pady=5)
+exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20), command= exit_app).grid(row=10,column=10,padx=5,pady=5)
 
 # Message window
 def display_message(message):
@@ -77,7 +77,7 @@ horizontal_steps_entry.grid(row=3,column=4,padx=1,pady=1)
 horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
 
 #Move "HOME" 
-home_button = tk.Button(motor_control, text="Move to Bottom Position").grid(row=6,column=0,padx=10,pady=10)
+home_button = tk.Button(motor_control, text="Move to Bottom Position", command=mf.move_home).grid(row=6,column=0,padx=10,pady=10)
 
 # Distance Sensor
 distance_label = tk.Label(motor_control, text="Distance from Bottom: ")
