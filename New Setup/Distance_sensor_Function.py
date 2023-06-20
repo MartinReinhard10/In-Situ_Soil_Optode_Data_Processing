@@ -10,7 +10,9 @@ tof = VL53L0X(i2c)
 distance_values = []
 
 def measure_distance(label):
+    global median_distance
     # Perform distance measurement and return the distance in mm
+    tof.measurement_timing_budget = 200000
     distance_mm = tof.range
 
     # Append the distance to the list
