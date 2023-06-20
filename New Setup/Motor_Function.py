@@ -86,3 +86,16 @@ def move_home():
     GPIO.output(VERTICAL_DIR_PIN, DOWN)
     while GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.HIGH:
         step(VERTICAL_STEP_PIN)
+
+# Move to set distance
+def move_distance(new_distance, current_distance):
+    if new_distance >= current_distance:
+        GPIO.output(VERTICAL_DIR_PIN, UP)
+    else:
+        GPIO.output(VERTICAL_DIR_PIN, DOWN)
+    while new_distance != current_distance and GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.HIGH and GPIO.input(TOP_ENDSTOP_PIN) == GPIO.HIGH:
+        step(VERTICAL_STEP_PIN)
+        
+    
+
+

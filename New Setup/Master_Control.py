@@ -79,9 +79,21 @@ horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
 #Move "HOME" 
 home_button = tk.Button(motor_control, text="Move to Bottom Position", command=mf.move_home).grid(row=6,column=0,padx=10,pady=10)
 
+#Move to set Distance
+def set_distance(distance_trigger):
+    global new_distance_value
+    global current_distance_value
+    new_distance_value = move_distance_entry.get()
+    current_distance_value = dsf.median_distance
+
+move_distance_button = tk.Button(motor_control, text="Move to Distance", command=lambda: mf.move_distance(new_distance_value,current_distance_value)).grid(row=7,column=0,padx=10,pady=10)
+move_distance_entry = tk.Entry(motor_control)
+move_distance_entry.grid(row=7,column=1,padx=10,pady=10)
+move_distance_entry.bind("<KeyRelease>", set_distance)
+
 # Distance Sensor
 distance_label = tk.Label(motor_control, text="Distance from Bottom: ")
-distance_label.grid(row=4,column=0,padx=1,pady=1)
+distance_label.grid(row=8,column=0,padx=1,pady=1)
 dsf.measure_distance(distance_label)
 
 # Temperature and humidity 
