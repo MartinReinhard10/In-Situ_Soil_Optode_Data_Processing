@@ -4,6 +4,7 @@ import Motor_Function as mf
 import Distance_sensor_Function as dsf
 import Temp_Humid_Function as thf
 import Measurement_Functions as mefu
+import threading
 
 # EXIT GUI Command
 def exit_app():
@@ -203,34 +204,61 @@ def measurement_direction():
 
 def set_horizontal_step_range(hori_range_trigger):
     global hori_range
-    hori_range = int(float(horizontal_view_entry.get() * 407.5))
+    hori_range_get = int(horizontal_view_entry.get())
+    hori_range = round(hori_range_get * 407.5)
+
+    message = f"Horizontal Step Range: {hori_range}\n"
+    text_widget.insert('end', message)
+    text_widget.see('end')
      
 def set_verticale_step_range(vert_range_trigger):
     global vert_range
-    vert_range = int(float(vertical_view_entry.get() * 800))
+    vert_range_get = int(vertical_view_entry.get())
+    vert_range = round(vert_range_get * 800)
+
+    message = f"Vertical Step Range: {vert_range}\n"
+    text_widget.insert('end', message)
+    text_widget.see('end')
 
 def set_horizontal_overlap(hori_overlap_trigger):
     global hori_overlap
-    hori_overlap_get = horizontal_overlap_entry.get()
-    hori_overlap = (int(float(hori_overlap_get * fov_x_steps / 100)))
-    
+    hori_overlap_get = int(horizontal_overlap_entry.get())
+    hori_overlap = round((101-hori_overlap_get )* fov_x_steps / 100)
+
+    message = f"Horizontal Step Overlap: {hori_overlap}\n"
+    text_widget.insert('end', message)
+    text_widget.see('end')
+
 def set_vertical_overlap(vert_overlap_trigger):
     global vert_overlap
-    vert_overlap_get = vertical_overlap_entry.get()
-    vert_overlap = (int(float(vert_overlap_get * fov_y_steps / 100 )))
+    vert_overlap_get = int(vertical_overlap_entry.get())
+    vert_overlap = round((101-vert_overlap_get) * fov_y_steps / 100)
+
+    message = f"Vertical Step Overlap: {vert_overlap}\n"
+    text_widget.insert('end', message)
+    text_widget.see('end')
 
 def image_range():
     global hori_image_range
     global vert_image_range
     global num_images_seq
-    hori_image_range = hori_range/hori_overlap
-    vert_image_range = vert_range/vert_overlap
-    num_images_seq = hori_image_range + vert_image_range
+    hori_image_range = round(hori_range/hori_overlap)
+    vert_image_range = round(vert_range/vert_overlap)
+    num_images_seq = round(hori_image_range * vert_image_range)
     number_images_sequence.config(text="Number of Images in Sequence: {}".format(num_images_seq))
+    print(hori_image_range)
+    print(vert_image_range)
 
-def set_seqeunce_number():
+def set_seqeunce_number(seq_num_trigger):
     global seq_num
     seq_num = int(sequence_number_entry.get())
+
+def start_measurement():
+    try:
+        mefu.measurement_sequence(vert_image_range,hori_image_range,vert_overlap,hori_overlap,direction,exposure_time,iso_value,uv_state,seq_num)
+    except KeyboardInterrupt:
+        mf.stop_motors
+
 
 mearsurement_frame = tk.Frame(main_frame,width=200,height=500)
 mearsurement_frame.grid(row=1,column=3,padx=1,pady=1)
@@ -246,20 +274,22 @@ vertical_view_entry.bind("<KeyRelease>",set_verticale_step_range)
 horizontal_overlap_label = tk.Label(mearsurement_frame,text="Set Horizontal Image Overlap %:").grid(row=2,column=0,padx=1,pady=1)
 horizontal_overlap_entry = tk.Entry(mearsurement_frame)
 horizontal_overlap_entry.grid(row=2,column=1,padx=5,pady=5)
+horizontal_overlap_entry.bind("<KeyRelease>",set_horizontal_overlap)
 vertical_overlap_label = tk.Label(mearsurement_frame,text="Set Vertical Image Overlap %:").grid(row=3,column=0,padx=1,pady=1)
 vertical_overlap_entry = tk.Entry(mearsurement_frame)
 vertical_overlap_entry.grid(row=3,column=1,padx=5,pady=5)
+vertical_overlap_entry.bind("<KeyRelease>", set_vertical_overlap)
 measurement_direction_vertical_label = tk.Label(mearsurement_frame, text="DOWN")
 measurement_direction_vertical_label.grid(row=4,column=1,padx=5,pady=5)
 measurement_direction_vertical_button = tk.Button(mearsurement_frame,text="Vertical Measurement Direction:", command=measurement_direction).grid(row=4,column=0,padx=5,pady=5)
-confirm_button = tk.Button(text="Confirm Image Range", command=image_range).grid(row=5,column=0,padx=5,pady=5)
+confirm_button = tk.Button(mearsurement_frame,text="Confirm Image Range", command=image_range).grid(row=5,column=0,padx=5,pady=5)
 number_images_sequence = tk.Label(mearsurement_frame, text="Number of Images in Sequence:")
 number_images_sequence.grid(row=6,column=0,padx=5,pady=5)
-sequence_number_label = tk.Label(mearsurement_frame,text="Set Sequence Number for Archiving:").sequence_number_entry.grid(row=7,column=0,padx=5,pady=5)
+sequence_number_label = tk.Label(mearsurement_frame,text="Set Sequence Number for Archiving:").grid(row=7,column=0,padx=5,pady=5)
 sequence_number_entry = tk.Entry(mearsurement_frame)
 sequence_number_entry.grid(row=7,column=1,padx=5,pady=5)
 sequence_number_entry.bind("<KeyRelease>", set_seqeunce_number)
-start_measure_button = tk.Button(mearsurement_frame,text="Start Measurement Sequence", command=lambda:mefu.measurement_sequence(vert_image_range,hori_image_range,vert_overlap,hori_overlap,direction,exposure_time,iso_value,uv_state,seq_num)).grid(row=8,column=0,padx=5,pady=5)
+start_measure_button = tk.Button(mearsurement_frame,text="Start Measurement Sequence", command=start_measurement).grid(row=8,column=0,padx=5,pady=5)
 stop_measure_button = tk.Button(mearsurement_frame,text="Stop Measurement Sequence").grid(row=8,column=1,padx=5,pady=5)
 
 # Start GUI

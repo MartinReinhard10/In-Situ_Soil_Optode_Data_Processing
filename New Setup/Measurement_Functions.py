@@ -1,17 +1,22 @@
 import Camera_Function as cf
 import Motor_Function as mf
+from time import sleep
 
 
 def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, vert_direction,exposure,iso,led,seq_num):
+    
     rotate_right = True
 
     for i in range(vert_range):
+        sleep(3)
         for j in range(horiz_range):
             cf.capture_measurements(led,exposure,iso,seq_num)
             if rotate_right == True: 
                 mf.rotate_RIGHT(horiz_overlap)
+                sleep(2)
             else:
                 mf.rotate_LEFT(horiz_overlap)
+                sleep(2)
         rotate_right = not rotate_right
 
         if vert_direction == True:
