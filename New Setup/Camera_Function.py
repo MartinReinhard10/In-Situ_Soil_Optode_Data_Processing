@@ -10,11 +10,13 @@ from datetime import datetime
 import os
 
 GPIO.setmode(GPIO.BCM)
-
+GPIO.setwarnings(False)
 
 # Set LED Pin
 led = 23
 GPIO.setup(led, GPIO.OUT)
+white_led = 25
+GPIO.setup(25,GPIO.OUT)
 
 # Intialize Camera for preview and RGB image
 picam2 = Picamera2()

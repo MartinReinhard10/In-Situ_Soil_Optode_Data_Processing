@@ -10,6 +10,7 @@ import threading
 def exit_app():
         thf.dhtDevice.exit()
         root.destroy()
+        cf.GPIO.cleanup(25)
 
 # GUI Layout and function
 root = tk.Tk()
@@ -97,10 +98,10 @@ thf.update_temp_values(temp_label, humidity_label)
 camera_frame = tk.Frame(main_frame, width=200,height=500)
 camera_frame.grid(row=1,column=2,padx=10,pady=10)
 camera_frame_title = tk.Label(main_frame, text= "Camera Functions:",font="Arial").grid(row=0,column=2,padx=5,pady=5)
-preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=0,column=0,padx=5,pady=5)
-stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=0,column=1,padx=5,pady=5)
-camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=1,column=0,padx=5,pady=5)
-camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=4,column=0,padx=1,pady=1)
+preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=1,column=0,padx=5,pady=5)
+stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
+camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
+camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=5,column=0,padx=1,pady=1)
 
 
 # Camera Settings: Exposure and ISO
@@ -111,9 +112,9 @@ def set_exposure(exposure):
      display_message(f"exposure: {exposure_time}\n")
      
 
-exposure_label = tk.Label(camera_frame, text= "Exposure Time (seconds):").grid(row=2,column=0,padx=1,pady=1)     
+exposure_label = tk.Label(camera_frame, text= "Exposure Time (seconds):").grid(row=3,column=0,padx=1,pady=1)     
 exposure_entry = tk.Entry(camera_frame)
-exposure_entry.grid(row=2,column=1,padx=1,pady=1)
+exposure_entry.grid(row=3,column=1,padx=1,pady=1)
 exposure_entry.bind("<KeyRelease>", set_exposure)
 
 def set_iso(iso):
@@ -122,29 +123,49 @@ def set_iso(iso):
      iso_value = int(iso_value_get)
      display_message(f"ISO: {iso_value}\n")
 
-iso_label = tk.Label(camera_frame, text= "ISO:").grid(row=3,column=0,padx=1,pady=1)
+iso_label = tk.Label(camera_frame, text= "ISO:").grid(row=4,column=0,padx=1,pady=1)
 iso_entry = tk.Entry(camera_frame)
-iso_entry.grid(row=3,column=1,padx=1,pady=1)
+iso_entry.grid(row=4,column=1,padx=1,pady=1)
 iso_entry.bind("<KeyRelease>", set_iso)
 
-#LED Control
+#UV LED Control
 def toggle_uv_state():
     global uv_state
     if uv_label.cget("text") == "ON":
         uv_label.config(text="OFF")
+        cf.GPIO.output(cf.led, cf.GPIO.LOW)
     else:
         uv_label.config(text="ON")
+        cf.GPIO.output(cf.led, cf.GPIO.HIGH)
     
     uv_state = uv_label.cget("text") == "ON"
 
     display_message(f"UV state: {uv_state}\n")
     
 uv_label = tk.Label(camera_frame,text="OFF")
-uv_label.grid(row=5,column=1,padx=5,pady=5)
-uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=5,column=0,padx=5,pady=5)
+uv_label.grid(row=6,column=1,padx=5,pady=5)
+uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=6,column=0,padx=5,pady=5)
+
+#White LED Control
+def toggle_white_led_state():
+    global white_state
+    if white_label.cget("text") == "ON":
+        white_label.config(text="OFF")
+        cf.GPIO.output(cf.white_led, cf.GPIO.LOW)
+    else:
+        white_label.config(text="ON")
+        cf.GPIO.output(25,cf.GPIO.HIGH)
+    
+    white_state = white_label.cget("text") == "ON"
+
+    display_message(f"White LED state: {white_state}\n")
+    
+white_label = tk.Label(camera_frame,text="OFF")
+white_label.grid(row=0,column=1,padx=5,pady=5)
+white_button =tk.Button(camera_frame,text="Toggle White LED:", command=toggle_white_led_state).grid(row=0,column=0,padx=5,pady=5)
 
 #Show Histogram 
-histogram_button = tk.Button(camera_frame, text= "RAW Channels Histogram", command=cf.display_histogram).grid(row=4,column=1, padx=1,pady=1 )
+histogram_button = tk.Button(camera_frame, text= "RAW Channels Histogram", command=cf.display_histogram).grid(row=5,column=1, padx=1,pady=1 )
 
 #Capture Calibration images 
 
@@ -167,20 +188,20 @@ def capture_calibration_images():
     cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state, delay_time)
     display_message("Calibration images captured.\n")
 
-o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=9,column=0,padx=1,pady=1)
+o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=10,column=0,padx=1,pady=1)
 o2_entry = tk.Entry(camera_frame)
-o2_entry.grid(row=9,column=1,padx=1,pady=1)
+o2_entry.grid(row=10,column=1,padx=1,pady=1)
 o2_entry.bind("<KeyRelease>", set_o2)
-delay_time_label = tk.Label(camera_frame, text="Set Delay Between Images:").grid(row=8,column=0,padx=1,pady=1)
+delay_time_label = tk.Label(camera_frame, text="Set Delay Between Images:").grid(row=9,column=0,padx=1,pady=1)
 delay_time_entry = tk.Entry(camera_frame)
-delay_time_entry.grid(row=8,column=1,padx=1,pady=1)
+delay_time_entry.grid(row=9,column=1,padx=1,pady=1)
 delay_time_entry.bind("<KeyRelease>", set_delay)
-num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=7,column=0, padx=1,pady=1 )
+num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=8,column=0, padx=1,pady=1 )
 num_images_entry = tk.Entry(camera_frame)
-num_images_entry.grid(row=7,column=1, padx=1,pady=1 )
+num_images_entry.grid(row=8,column=1, padx=1,pady=1 )
 num_images_entry.bind("<KeyRelease>", set_image_number)
-capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images", command=capture_calibration_images).grid(row=10,column=0,padx=10,pady=10)
-capture_calibration_label = tk.Label(camera_frame,text="Calibration Settings:", font=8).grid(row=6,column=0,padx=10,pady=10)
+capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images", command=capture_calibration_images).grid(row=11,column=0,padx=10,pady=10)
+capture_calibration_label = tk.Label(camera_frame,text="Calibration Settings:", font=8).grid(row=7,column=0,padx=10,pady=10)
 #Measurements Sequence
 
 #Camera field of view in cm
