@@ -62,7 +62,7 @@ def capture_raw(LED, exposure, iso):
             "FrameDurationLimits": (114,239000000)} #Min/Max frame duration
     # Setup config parameters
     preview_config = picam2.create_preview_configuration(raw={"size": picam2.sensor_resolution, "format": "SBGGR12",},
-                                                     controls = controls, transform=Transform(hflip=1, vflip=1)) 
+                                                     controls = controls) 
     picam2.configure(preview_config)
     if LED == True:
         GPIO.output(led, GPIO.HIGH) 
@@ -83,9 +83,9 @@ def capture_raw(LED, exposure, iso):
         raw = picam2.capture_array("raw").view(dtype="uint16")
         print(picam2.capture_metadata())
         picam2.stop()
-        plt.imshow(raw, cmap="gray")
+        raw_image = plt.imshow(raw, cmap="gray")
         print("RAW Ready")
-        plt.show()
+        plt.show(raw_image)
     
     #Display Histogram and pixel information of previous image
 
