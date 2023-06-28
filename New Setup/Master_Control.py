@@ -4,7 +4,6 @@ import Motor_Function as mf
 import Distance_sensor_Function as dsf
 import Temp_Humid_Function as thf
 import Measurement_Functions as mefu
-import threading
 
 # EXIT GUI Command
 def exit_app():
@@ -133,10 +132,10 @@ def toggle_uv_state():
     global uv_state
     if uv_label.cget("text") == "ON":
         uv_label.config(text="OFF")
-        #cf.GPIO.output(cf.led, cf.GPIO.LOW)
+        cf.GPIO.output(cf.led, cf.GPIO.LOW)
     else:
         uv_label.config(text="ON")
-        #cf.GPIO.output(cf.led, cf.GPIO.HIGH)
+        cf.GPIO.output(cf.led, cf.GPIO.HIGH)
     
     uv_state = uv_label.cget("text") == "ON"
 

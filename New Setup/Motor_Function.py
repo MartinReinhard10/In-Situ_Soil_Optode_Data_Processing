@@ -26,8 +26,8 @@ GPIO.setup(BOTTOM_ENDSTOP_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Set motor direction
 DOWN = GPIO.HIGH
 UP = GPIO.LOW
-LEFT = GPIO.LOW
-RIGHT = GPIO.HIGH
+LEFT = GPIO.HIGH
+RIGHT = GPIO.LOW
 
 # Move motor in steps
 def step(step_pin):
@@ -36,9 +36,6 @@ def step(step_pin):
     GPIO.output(step_pin, GPIO.LOW)
     time.sleep(step_speed)
 
-def stop_motors():
-    GPIO.output(VERTICAL_STEP_PIN, GPIO.LOW)
-    GPIO.output(ROTATE_STEP_PIN, GPIO.LOW)
 
 # Move vertical motor UP a certain number of steps or until an endstop is triggered
 def move_vertical_UP(steps):
