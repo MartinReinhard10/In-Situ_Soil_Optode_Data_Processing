@@ -85,7 +85,7 @@ def capture_raw(LED, exposure, iso):
         picam2.stop()
         raw_image = plt.imshow(raw, cmap="gray")
         print("RAW Ready")
-        plt.show(raw_image)
+        plt.show()
     
     #Display Histogram and pixel information of previous image
 
