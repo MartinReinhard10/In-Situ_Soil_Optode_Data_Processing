@@ -14,26 +14,25 @@ def exit_app():
 # GUI Layout and function
 root = tk.Tk()
 root.title("Control For Optode Platform")
-root.config()
 
 main_frame = tk.Frame(root, width=1000, height=1000)
 main_frame.grid(row=0, column=0,padx=20,pady=20)
 
-exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20), command=exit_app).grid(row=10,column=10,padx=5,pady=5)
+exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20), command=exit_app).grid(row=1,column=5,padx=5,pady=5)
 
 # Message window
 def display_message(message):
     text_widget.insert('end', message + '\n')
     text_widget.see('end')  # Auto-scroll to the end
 
-text_widget_label = tk.Label(main_frame, text= "System Messages:", font="Arial").grid(row=0,column=4,padx=5,pady=5)
+#text_widget_label = tk.Label(main_frame, text= "System Messages:", font="Arial").grid(row=0,column=4,padx=5,pady=5)
 text_widget = tk.Text(main_frame, height=20, width=20)
 text_widget.grid(row=1, column=4, padx=2, pady=5)
 
 #Manual motor control Frame
 motor_control=tk.Frame(main_frame,width=500,height=500)
 motor_control.grid(row=1,column=1, padx=10, pady=10)
-tk.Label(main_frame,text="Manual Motor Controls:", font="Arial").grid(row=0,column=1,padx=5,pady=5)
+#tk.Label(main_frame,text="Manual Motor Controls:", font="Arial").grid(row=0,column=1,padx=5,pady=5)
 
 # Set Step Speed
 def set_step_speed(speed):
@@ -96,7 +95,7 @@ thf.update_temp_values(temp_label, humidity_label)
 # Camera functions
 camera_frame = tk.Frame(main_frame, width=200,height=500)
 camera_frame.grid(row=1,column=2,padx=10,pady=10)
-camera_frame_title = tk.Label(main_frame, text= "Camera Functions:",font="Arial").grid(row=0,column=2,padx=5,pady=5)
+#camera_frame_title = tk.Label(main_frame, text= "Camera Functions:",font="Arial").grid(row=0,column=2,padx=5,pady=5)
 preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=1,column=0,padx=5,pady=5)
 stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
@@ -135,7 +134,7 @@ def toggle_uv_state():
         cf.GPIO.output(cf.led, cf.GPIO.LOW)
     else:
         uv_label.config(text="ON")
-        cf.GPIO.output(cf.led, cf.GPIO.HIGH)
+        #cf.GPIO.output(cf.led, cf.GPIO.HIGH)
     
     uv_state = uv_label.cget("text") == "ON"
 
@@ -282,7 +281,7 @@ def start_measurement():
 
 mearsurement_frame = tk.Frame(main_frame,width=200,height=500)
 mearsurement_frame.grid(row=1,column=3,padx=1,pady=1)
-mearsurement_frame_title = tk.Label(main_frame, text="Measurement Sequence:",font="Arial").grid(row=0,column=3,padx=5,pady=5)
+#mearsurement_frame_title = tk.Label(main_frame, text="Measurement Sequence:",font="Arial").grid(row=0,column=3,padx=5,pady=5)
 horizontal_view_label = tk.Label(mearsurement_frame,text="Set horizontal range (cm):").grid(row=0,column=0,padx=1,pady=1)
 horizontal_view_entry = tk.Entry(mearsurement_frame)
 horizontal_view_entry.grid(row=0,column=1,padx=5,pady=5)
