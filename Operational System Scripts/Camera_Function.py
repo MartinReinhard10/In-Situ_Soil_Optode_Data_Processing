@@ -90,6 +90,8 @@ def capture_raw(LED, exposure, iso):
     #Display Histogram and pixel information of previous image
 
 def display_histogram():
+    #Clean the figure display
+    plt.clf()
     #Get color channels in bayer order (BGGR)
     red = raw[1::2,1::2]
     green1 = raw[0::2,1::2]
@@ -115,6 +117,7 @@ def display_histogram():
     plt.xlabel("Pixel intensity")
     plt.ylabel("Pixel Frequency")
     plt.show()
+    
     #Get mean of pixel intensities for each channel
     mean_red = np.mean(red)
     mean_green = np.mean(green)
