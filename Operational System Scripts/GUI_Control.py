@@ -275,67 +275,47 @@ def set_seqeunce_number(seq_num_trigger):
     global seq_num
     seq_num = int(sequence_number_entry.get())
 
-# Initialize variables to store the total horizontal and vertical steps moved
-total_hori_steps_moved = 0
-total_vert_steps_moved = 0
 
-# Function to calculate and move the camera back to its initial position
-def move_to_initial_position():
-    global total_hori_steps_moved, total_vert_steps_moved, direction
-
-    # Calculate the steps to move back to initial position
-    back_hori_steps = total_hori_steps_moved
-    back_vert_steps = total_vert_steps_moved
-
-    mf.rotate_LEFT(back_hori_steps) 
-
-    direction = not direction
-    if direction:
-        mf.move_vertical_UP(back_vert_steps)  # Move up
-    else:
-        mf.move_vertical_DOWN(back_vert_steps)  # Move down
-
-    # Reset the total steps moved
-    total_hori_steps_moved = 0
-    total_vert_steps_moved = 0
 
 # Add a variable to track the number of times the sequence has run
 sequence_count = 0
 
 # Function to execute the measurement sequence
 def run_measurement_sequence():
-    global sequence_count, total_hori_steps_moved, total_vert_steps_moved
+    global sequence_count
+
      # Get the total number of sequences and sequence delay from the input fields
     total_sequences = int(total_sequences_entry.get())
     sequence_delay = int(sequence_delay_entry.get())
 
     # Run the measurement sequence logic
-    try:
-        mefu.measurement_sequence(vert_image_range, hori_image_range, vert_overlap, hori_overlap, direction, exposure_time, iso_value, uv_state, seq_num)
-    except KeyboardInterrupt:
-        print("Terminating terminal...")
-        exit()
-
-    # Calculate the steps to move back to initial position
-    total_hori_steps_moved += hori_range
-    total_vert_steps_moved += vert_range
-
+    mefu.measurement_sequence(vert_image_range, hori_image_range, vert_overlap, hori_overlap, direction, exposure_time, iso_value, uv_state, seq_num)
+    
     # Call the function to move the camera back to initial position
-    move_to_initial_position()
+    mefu.move_to_initial_position(vert_image_range, hori_image_range, direction)
 
     # Increment the sequence count
     sequence_count += 1
-    print(f"Completed sequence {sequence_count}")
+    message = f"Completed sequence {sequence_count}\n"
+    text_widget.insert('end', message)
+    text_widget.see('end')
+    
 
     # Check if the desired number of sequences have run
     if sequence_count < total_sequences:
-        print(f"Waiting for {sequence_delay} seconds before starting the next sequence...")
+        message = f"Waiting for {sequence_delay} seconds before starting the next sequence...\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+
         time.sleep(sequence_delay)
 
         # Call the function recursively to run the next sequence
         run_measurement_sequence()
     else:
-        print("All sequences completed!")
+        message = f"All sequences completed!\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+        
 
 # Function to start the measurement sequence
 def start_measurement():
@@ -383,9 +363,6 @@ sequence_number_entry.grid(row=7,column=1,padx=5,pady=5)
 sequence_number_entry.bind("<KeyRelease>", set_seqeunce_number)
 start_measure_button = tk.Button(mearsurement_frame,text="Start Measurement Sequence", command=start_measurement).grid(row=8,column=0,padx=5,pady=5)
 #stop_measure_button = tk.Button(mearsurement_frame,text="Stop Measurement Sequence").grid(row=8,column=1,padx=5,pady=5)
-
-move_to_initial_button = tk.Button(mearsurement_frame, text="Move to Initial Position", command=move_to_initial_position)
-move_to_initial_button.grid(row=9, column=0, columnspan=2, padx=5, pady=5)
 
 # Add input fields for setting the total number of sequences and delay between sequences
 total_sequences_label = tk.Label(mearsurement_frame, text="Total Number of Sequences:")
