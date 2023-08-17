@@ -54,7 +54,7 @@ def move_to_initial_position(vert_range, horiz_range, vert_direction):
 
     
     if vert_direction == True:
-        mf.move_vertical_UP(vert_range)  # Move up
+        mf.move_vertical_DOWN(vert_range)  # Move up
     else:
-        mf.move_vertical_DOWN(vert_range)  # Move down
+        mf.move_vertical_UP(vert_range)  # Move down
 
