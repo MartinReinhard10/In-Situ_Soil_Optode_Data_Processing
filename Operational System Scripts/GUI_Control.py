@@ -334,7 +334,7 @@ def run_measurement_sequence():
     mefu.measurement_sequence(vert_image_range, hori_image_range, vert_overlap, hori_overlap, direction, exposure_time, iso_value, uv_state, seq_num)
     
     # Call the function to move the camera back to initial position
-    mefu.move_to_initial_position(vert_image_range, hori_image_range, direction)
+    mefu.move_to_initial_position(vert_range, hori_range, direction)
 
     # Increment the sequence count
     sequence_count += 1
