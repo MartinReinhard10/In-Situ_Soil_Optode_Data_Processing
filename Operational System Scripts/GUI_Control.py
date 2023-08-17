@@ -309,7 +309,7 @@ def image_range():
         num_images_seq = vert_image_range
     else:
         num_images_seq = round(hori_image_range * vert_image_range)
-    number_images_sequence.config(text="Number of Images in Sequence: {}".format(num_images_seq))
+    number_images_sequence.config(text="Number of Images in Sequence:{} - Vertical:{} - Horizontal:{}".format(num_images_seq, vert_image_range,hori_image_range))
     print(hori_image_range)
     print(vert_image_range)
 
