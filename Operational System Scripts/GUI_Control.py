@@ -209,8 +209,8 @@ capture_calibration_label = tk.Label(camera_frame,text="Sequence Settings:", fon
 fov_x = 3.3 
 fov_y = 2.5
 #Camera field of view in steps
-fov_x_steps = fov_x * 407.5
-fov_y_steps = fov_y * 800
+fov_x_steps = round(fov_x * 407.5)
+fov_y_steps = round(fov_y * 800)
 
 def measurement_direction():
     global direction
@@ -275,7 +275,7 @@ def set_horizontal_overlap(hori_overlap_trigger):
         text_widget.insert('end', message)
         text_widget.see('end')
     else:
-        hori_overlap = round(hori_range * hori_overlap_get / 100)
+        hori_overlap = round((100-hori_range) * hori_overlap_get / 100)
         message = f"Horizontal Step Overlap: {hori_overlap}\n"
         text_widget.insert('end', message)
         text_widget.see('end')
@@ -289,11 +289,11 @@ def set_vertical_overlap(vert_overlap_trigger):
         text_widget.see('end')
     elif vert_overlap_get == 0:
         vert_overlap = fov_y_steps
-        message = f"vertical Step Overlap: {hori_overlap}\n"
+        message = f"vertical Step Overlap: {vert_overlap}\n"
         text_widget.insert('end', message)
         text_widget.see('end')
     else:
-        vert_overlap = round(vert_range * vert_overlap_get / 100)
+        vert_overlap = round((100-vert_range) * vert_overlap_get / 100)
         message = f"Vertical Step Overlap: {vert_overlap}\n"
         text_widget.insert('end', message)
         text_widget.see('end')
