@@ -246,29 +246,57 @@ def set_horizontal_step_range(hori_range_trigger):
 def set_verticale_step_range(vert_range_trigger):
     global vert_range
     vert_range_get = int(vertical_view_entry.get())
-    vert_range = round(vert_range_get * 800)
+    if vert_range_get < 1:
+        message = f"Vertical range must be at least 1\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    elif vert_range_get ==1:
+        vert_range = 0
+        message = f"Vertical Step Range: {vert_range}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    else:
+        vert_range = round(vert_range_get * fov_y_steps)
+        message = f"Vertical Step Range: {vert_range}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
 
-    message = f"Vertical Step Range: {vert_range}\n"
-    text_widget.insert('end', message)
-    text_widget.see('end')
 
 def set_horizontal_overlap(hori_overlap_trigger):
     global hori_overlap
     hori_overlap_get = int(horizontal_overlap_entry.get())
-    hori_overlap = round((101-hori_overlap_get )* fov_x_steps / 100)
-
-    message = f"Horizontal Step Overlap: {hori_overlap}\n"
-    text_widget.insert('end', message)
-    text_widget.see('end')
+    if hori_overlap_get > 99:
+        message = f"Maximum 99% overlap\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    elif hori_overlap_get == 0:
+        hori_overlap = fov_x_steps
+        message = f"Horizontal Step Overlap: {hori_overlap}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    else:
+        hori_overlap = round(hori_range * hori_overlap_get / 100)
+        message = f"Horizontal Step Overlap: {hori_overlap}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
 
 def set_vertical_overlap(vert_overlap_trigger):
     global vert_overlap
     vert_overlap_get = int(vertical_overlap_entry.get())
-    vert_overlap = round((101-vert_overlap_get) * fov_y_steps / 100)
-
-    message = f"Vertical Step Overlap: {vert_overlap}\n"
-    text_widget.insert('end', message)
-    text_widget.see('end')
+    if vert_overlap_get > 99:
+        message = f"Maximum 99% overlap\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    elif vert_overlap_get == 0:
+        vert_overlap = fov_y_steps
+        message = f"vertical Step Overlap: {hori_overlap}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    else:
+        vert_overlap = round(vert_range * vert_overlap_get / 100)
+        message = f"Vertical Step Overlap: {vert_overlap}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
 
 def image_range():
     global hori_image_range
