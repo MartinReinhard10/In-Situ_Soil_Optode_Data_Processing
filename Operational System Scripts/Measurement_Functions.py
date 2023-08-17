@@ -9,6 +9,7 @@ def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, v
 
     for i in range(vert_range):
         sleep(2)
+        print("image:"[i])
         cf.capture_measurements(led,exposure,iso,seq_num)
         sleep(2)
         for j in range(horiz_range):
@@ -20,7 +21,7 @@ def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, v
                 mf.rotate_LEFT(horiz_overlap)
                 sleep(2)
             rotate_right = not rotate_right
-
+        print("Moving up")
         if vert_direction == True:
             mf.move_vertical_UP(vert_overlap)
         else:
@@ -34,6 +35,7 @@ def move_to_initial_position(vert_range, horiz_range, vert_direction):
         mf.rotate_LEFT(horiz_range) 
 
     if vert_direction == True:
+        print("moving down")
         mf.move_vertical_DOWN(vert_range)  # Move up
     else:
         mf.move_vertical_UP(vert_range)  # Move down
