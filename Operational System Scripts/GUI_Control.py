@@ -275,7 +275,7 @@ def set_horizontal_overlap(hori_overlap_trigger):
         text_widget.insert('end', message)
         text_widget.see('end')
     else:
-        hori_overlap = round(hori_range * (100 - hori_overlap_get) / 100)
+        hori_overlap = round(fov_x_steps * (100 - hori_overlap_get) / 100)
 
         message = f"Horizontal Step Overlap: {hori_overlap}\n"
         text_widget.insert('end', message)
@@ -294,7 +294,7 @@ def set_vertical_overlap(vert_overlap_trigger):
         text_widget.insert('end', message)
         text_widget.see('end')
     else:
-        vert_overlap = round(vert_range * (100 - vert_overlap_get) / 100)
+        vert_overlap = round(fov_y_steps * (100 - vert_overlap_get) / 100)
         message = f"Vertical Step Overlap: {vert_overlap}\n"
         text_widget.insert('end', message)
         text_widget.see('end')
