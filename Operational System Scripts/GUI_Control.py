@@ -275,7 +275,8 @@ def set_horizontal_overlap(hori_overlap_trigger):
         text_widget.insert('end', message)
         text_widget.see('end')
     else:
-        hori_overlap = round((100-hori_range) * hori_overlap_get / 100)
+        hori_overlap = round(hori_range * (100 - hori_overlap_get) / 100)
+
         message = f"Horizontal Step Overlap: {hori_overlap}\n"
         text_widget.insert('end', message)
         text_widget.see('end')
@@ -293,7 +294,7 @@ def set_vertical_overlap(vert_overlap_trigger):
         text_widget.insert('end', message)
         text_widget.see('end')
     else:
-        vert_overlap = round((100-vert_range) * vert_overlap_get / 100)
+        vert_overlap = round(vert_range * (100 - vert_overlap_get) / 100)
         message = f"Vertical Step Overlap: {vert_overlap}\n"
         text_widget.insert('end', message)
         text_widget.see('end')
@@ -304,7 +305,10 @@ def image_range():
     global num_images_seq
     hori_image_range = round(hori_range/hori_overlap)
     vert_image_range = round(vert_range/vert_overlap)
-    num_images_seq = round(hori_image_range * vert_image_range)
+    if hori_image_range == 0:
+        num_images_seq = vert_image_range
+    else:
+        num_images_seq = round(hori_image_range * vert_image_range)
     number_images_sequence.config(text="Number of Images in Sequence: {}".format(num_images_seq))
     print(hori_image_range)
     print(vert_image_range)
