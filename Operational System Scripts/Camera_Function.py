@@ -86,12 +86,12 @@ def capture_raw(LED, exposure, iso):
         raw_image = plt.imshow(raw, cmap="gray")
         print("RAW Ready")
         plt.show()
+        #Clean the figure display
+        plt.clf()
     
     #Display Histogram and pixel information of previous image
 
 def display_histogram():
-    #Clean the figure display
-    plt.clf()
     #Get color channels in bayer order (BGGR)
     red = raw[1::2,1::2]
     green1 = raw[0::2,1::2]

@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 import Camera_Function as cf
 import Motor_Function as mf
@@ -99,7 +100,7 @@ camera_frame.grid(row=1,column=2,padx=10,pady=10)
 preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=1,column=0,padx=5,pady=5)
 stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
-camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=5,column=0,padx=1,pady=1)
+camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=6,column=0,padx=1,pady=1)
 
 
 # Camera Settings: Exposure and ISO
@@ -142,7 +143,7 @@ def toggle_uv_state():
     
 uv_label = tk.Label(camera_frame,text="OFF")
 uv_label.grid(row=6,column=1,padx=5,pady=5)
-uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=6,column=0,padx=5,pady=5)
+uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=5,column=0,padx=5,pady=5)
 
 #White LED Control
 def toggle_white_led_state():
@@ -163,7 +164,7 @@ white_label.grid(row=0,column=1,padx=5,pady=5)
 white_button =tk.Button(camera_frame,text="Toggle White LED:", command=toggle_white_led_state).grid(row=0,column=0,padx=5,pady=5)
 
 #Show Histogram 
-histogram_button = tk.Button(camera_frame, text= "RAW Channels Histogram", command=cf.display_histogram).grid(row=5,column=1, padx=1,pady=1 )
+histogram_button = tk.Button(camera_frame, text= "RAW Channels Histogram", command=cf.display_histogram).grid(row=6,column=1, padx=1,pady=1 )
 
 #Capture Calibration images 
 
@@ -184,9 +185,9 @@ def set_delay(delay_trigger):
 
 def capture_calibration_images():
     cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state, delay_time)
-    display_message("Calibration images captured.\n")
+    display_message("Image Sequence Completed.\n")
 
-o2_label = tk.Label(camera_frame, text="Enter O2 % Value:").grid(row=10,column=0,padx=1,pady=1)
+o2_label = tk.Label(camera_frame, text="Set Image Name:").grid(row=10,column=0,padx=1,pady=1)
 o2_entry = tk.Entry(camera_frame)
 o2_entry.grid(row=10,column=1,padx=1,pady=1)
 o2_entry.bind("<KeyRelease>", set_o2)
@@ -198,8 +199,10 @@ num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(r
 num_images_entry = tk.Entry(camera_frame)
 num_images_entry.grid(row=8,column=1, padx=1,pady=1 )
 num_images_entry.bind("<KeyRelease>", set_image_number)
-capture_calibration_button = tk.Button(camera_frame, text="Capture Calibration Images", command=capture_calibration_images).grid(row=11,column=0,padx=10,pady=10)
-capture_calibration_label = tk.Label(camera_frame,text="Calibration Settings:", font=8).grid(row=7,column=0,padx=10,pady=10)
+capture_calibration_button = tk.Button(camera_frame, text="Capture Image Sequence", command=capture_calibration_images).grid(row=11,column=0,padx=10,pady=10)
+capture_calibration_label = tk.Label(camera_frame,text="Sequence Settings:", font=8).grid(row=7,column=0,padx=10,pady=10)
+
+
 #Measurements Sequence
 
 #Camera field of view in cm
@@ -272,11 +275,81 @@ def set_seqeunce_number(seq_num_trigger):
     global seq_num
     seq_num = int(sequence_number_entry.get())
 
-def start_measurement():
+# Initialize variables to store the total horizontal and vertical steps moved
+total_hori_steps_moved = 0
+total_vert_steps_moved = 0
+
+# Function to calculate and move the camera back to its initial position
+def move_to_initial_position():
+    global total_hori_steps_moved, total_vert_steps_moved, direction
+
+    # Calculate the steps to move back to initial position
+    back_hori_steps = total_hori_steps_moved
+    back_vert_steps = total_vert_steps_moved
+
+    mf.rotate_LEFT(back_hori_steps) 
+
+    direction = not direction
+    if direction:
+        mf.move_vertical_UP(back_vert_steps)  # Move up
+    else:
+        mf.move_vertical_DOWN(back_vert_steps)  # Move down
+
+    # Reset the total steps moved
+    total_hori_steps_moved = 0
+    total_vert_steps_moved = 0
+
+# Add a variable to track the number of times the sequence has run
+sequence_count = 0
+
+# Function to execute the measurement sequence
+def run_measurement_sequence():
+    global sequence_count, total_hori_steps_moved, total_vert_steps_moved
+     # Get the total number of sequences and sequence delay from the input fields
+    total_sequences = int(total_sequences_entry.get())
+    sequence_delay = int(sequence_delay_entry.get())
+
+    # Run the measurement sequence logic
     try:
-        mefu.measurement_sequence(vert_image_range,hori_image_range,vert_overlap,hori_overlap,direction,exposure_time,iso_value,uv_state,seq_num)
+        mefu.measurement_sequence(vert_image_range, hori_image_range, vert_overlap, hori_overlap, direction, exposure_time, iso_value, uv_state, seq_num)
     except KeyboardInterrupt:
-        mf.stop_motors
+        print("Terminating terminal...")
+        exit()
+
+    # Calculate the steps to move back to initial position
+    total_hori_steps_moved += hori_range
+    total_vert_steps_moved += vert_range
+
+    # Call the function to move the camera back to initial position
+    move_to_initial_position()
+
+    # Increment the sequence count
+    sequence_count += 1
+    print(f"Completed sequence {sequence_count}")
+
+    # Check if the desired number of sequences have run
+    if sequence_count < total_sequences:
+        print(f"Waiting for {sequence_delay} seconds before starting the next sequence...")
+        time.sleep(sequence_delay)
+
+        # Call the function recursively to run the next sequence
+        run_measurement_sequence()
+    else:
+        print("All sequences completed!")
+
+# Function to start the measurement sequence
+def start_measurement():
+    global sequence_count
+
+    # Reset sequence count before starting
+    sequence_count = 0
+
+    # Call the function to run the measurement sequence
+    run_measurement_sequence()
+
+def set_seqeunce_number(seq_num_trigger):
+    global seq_num
+    seq_num = int(sequence_number_entry.get())
 
 
 mearsurement_frame = tk.Frame(main_frame,width=200,height=500)
@@ -309,7 +382,21 @@ sequence_number_entry = tk.Entry(mearsurement_frame)
 sequence_number_entry.grid(row=7,column=1,padx=5,pady=5)
 sequence_number_entry.bind("<KeyRelease>", set_seqeunce_number)
 start_measure_button = tk.Button(mearsurement_frame,text="Start Measurement Sequence", command=start_measurement).grid(row=8,column=0,padx=5,pady=5)
-stop_measure_button = tk.Button(mearsurement_frame,text="Stop Measurement Sequence").grid(row=8,column=1,padx=5,pady=5)
+#stop_measure_button = tk.Button(mearsurement_frame,text="Stop Measurement Sequence").grid(row=8,column=1,padx=5,pady=5)
+
+move_to_initial_button = tk.Button(mearsurement_frame, text="Move to Initial Position", command=move_to_initial_position)
+move_to_initial_button.grid(row=9, column=0, columnspan=2, padx=5, pady=5)
+
+# Add input fields for setting the total number of sequences and delay between sequences
+total_sequences_label = tk.Label(mearsurement_frame, text="Total Number of Sequences:")
+total_sequences_label.grid(row=10, column=0, padx=5, pady=5)
+total_sequences_entry = tk.Entry(mearsurement_frame)
+total_sequences_entry.grid(row=10, column=1, padx=5, pady=5)
+
+sequence_delay_label = tk.Label(mearsurement_frame, text="Delay Between Sequences (seconds):")
+sequence_delay_label.grid(row=11, column=0, padx=5, pady=5)
+sequence_delay_entry = tk.Entry(mearsurement_frame)
+sequence_delay_entry.grid(row=11, column=1, padx=5, pady=5)
 
 # Start GUI
 root.mainloop()

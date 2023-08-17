@@ -26,8 +26,8 @@ GPIO.setup(BOTTOM_ENDSTOP_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Set motor direction
 DOWN = GPIO.HIGH
 UP = GPIO.LOW
-LEFT = GPIO.HIGH
-RIGHT = GPIO.LOW
+LEFT = GPIO.LOW
+RIGHT = GPIO.HIGH
 
 # Move motor in steps
 def step(step_pin):
