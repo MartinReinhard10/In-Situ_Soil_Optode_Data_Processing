@@ -216,9 +216,10 @@ def measurement_direction():
     global direction
     if measurement_direction_vertical_label.cget("text") == "UP":
        measurement_direction_vertical_label.config(text="DOWN")
+       direction = False
     else:
        measurement_direction_vertical_label.config(text="UP")
-    direction = measurement_direction_vertical_label.cget("text") == "UP"
+       direction = True
 
     message = f"Direction_state: {direction}\n"
     text_widget.insert('end', message)
@@ -227,11 +228,20 @@ def measurement_direction():
 def set_horizontal_step_range(hori_range_trigger):
     global hori_range
     hori_range_get = int(horizontal_view_entry.get())
-    hori_range = round(hori_range_get * 407.5)
-
-    message = f"Horizontal Step Range: {hori_range}\n"
-    text_widget.insert('end', message)
-    text_widget.see('end')
+    if hori_range_get < 1:
+        message = f"Horizontal range must be at least 1\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    elif hori_range_get == 1:
+        hori_range = 0 
+        message = f"Horizontal Step Range: {hori_range}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
+    else:
+        hori_range = round(hori_range_get * fov_x_steps)
+        message = f"Horizontal Step Range: {hori_range}\n"
+        text_widget.insert('end', message)
+        text_widget.see('end')
      
 def set_verticale_step_range(vert_range_trigger):
     global vert_range
