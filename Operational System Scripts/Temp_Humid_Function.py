@@ -12,8 +12,6 @@ def update_temp_values(label_t, label_h):
         label_t.config(text="Temperature {:.1f} C".format(temperature_c))
         label_h.config(text="Humidity {}%".format(humidity))
     except RuntimeError as error:
-        label_t.config(text="Temperature - C")
-        label_h.config(text="Humidity - %")
         print(error.args[0])
 
     # Update every 2 seconds

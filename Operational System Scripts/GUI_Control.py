@@ -38,7 +38,7 @@ motor_control.grid(row=1,column=1, padx=10, pady=10)
 # Set Step Speed
 def set_step_speed(speed):
     mf.set_step_speed(speed_scale.get())
-speed_label = tk.Label(motor_control, text="Step Speed Control:").grid(row=0,column=0,padx=1,pady=1)
+speed_label = tk.Label(motor_control, text="Step Speed Control (Fast --> Slow):").grid(row=0,column=0,padx=1,pady=1)
 speed_scale = tk.Scale(motor_control, from_=0.0001, to=0.0005, resolution=0.0001, orient=tk.HORIZONTAL)
 speed_scale.configure(length=200)
 speed_scale.grid(row=0,column=1,padx=1,pady=1)
@@ -49,7 +49,7 @@ def set_steps_vertical(steps_v):
     mf.set_steps_vertical(vertical_steps_entry.get())
 vertical_direction_button = tk.Button(motor_control, text="Down", command=lambda: mf.move_vertical_DOWN(mf.num_steps_vertical)).grid(row=4,column=0,padx=1,pady=1)
 vertical_direction_button = tk.Button(motor_control, text="Up", command=lambda: mf.move_vertical_UP(mf.num_steps_vertical)).grid(row=4,column=1,padx=1,pady=1)
-vertical_steps_label = tk.Label(motor_control, text="Vertical Steps: ").grid(row=2,column=0,padx=10,pady=10)
+vertical_steps_label = tk.Label(motor_control, text="Vertical Steps (1cm = 800 steps): ").grid(row=2,column=0,padx=10,pady=10)
 vertical_steps_entry = tk.Entry(motor_control)
 vertical_steps_entry.grid(row=2,column=1,padx=1,pady=1)
 vertical_steps_entry.bind("<KeyRelease>", set_steps_vertical)
@@ -59,7 +59,7 @@ def set_steps_horizontal(steps_h):
     mf.set_steps_horizontal(horizontal_steps_entry.get())
 horizontal_direction_button = tk.Button(motor_control, text="Left", command=lambda:mf.rotate_LEFT(mf.num_steps_horizontal)).grid(row=5,column=0,padx=1,pady=1)
 horizontal_direction_button = tk.Button(motor_control, text="Right", command=lambda: mf.rotate_RIGHT(mf.num_steps_horizontal)).grid(row=5,column=1,padx=1,pady=1)
-horizontal_steps_label = tk.Label(motor_control, text=" Horizontal Steps: ").grid(row=3,column=0,padx=10,pady=10)
+horizontal_steps_label = tk.Label(motor_control, text=" Horizontal Steps (1cm = 408 steps): ").grid(row=3,column=0,padx=10,pady=10)
 horizontal_steps_entry = tk.Entry(motor_control)
 horizontal_steps_entry.grid(row=3,column=1,padx=1,pady=1)
 horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
@@ -74,7 +74,7 @@ def set_distance(distance_trigger):
     new_distance_value = move_distance_entry.get()
     current_distance_value = dsf.median_distance
 
-move_distance_button = tk.Button(motor_control, text="Move to Distance", command=lambda: mf.move_distance(new_distance_value,current_distance_value)).grid(row=7,column=0,padx=10,pady=10)
+move_distance_button = tk.Button(motor_control, text="Move to Distance !NOT WORKING!", command=lambda: mf.move_distance(new_distance_value,current_distance_value)).grid(row=7,column=0,padx=10,pady=10)
 move_distance_entry = tk.Entry(motor_control)
 move_distance_entry.grid(row=7,column=1,padx=10,pady=10)
 move_distance_entry.bind("<KeyRelease>", set_distance)
@@ -142,7 +142,7 @@ def toggle_uv_state():
     display_message(f"UV state: {uv_state}\n")
     
 uv_label = tk.Label(camera_frame,text="OFF")
-uv_label.grid(row=6,column=1,padx=5,pady=5)
+uv_label.grid(row=5,column=1,padx=5,pady=5)
 uv_button =tk.Button(camera_frame,text="Toggle UV LED:", command=toggle_uv_state).grid(row=5,column=0,padx=5,pady=5)
 
 #White LED Control
@@ -338,27 +338,21 @@ def run_measurement_sequence():
 
     # Increment the sequence count
     sequence_count += 1
-    message = f"Completed sequence {sequence_count}\n"
-    text_widget.insert('end', message)
-    text_widget.see('end')
+    print(f"Completed sequence {sequence_count}\n")
+   
     
-
     # Check if the desired number of sequences have run
     if sequence_count < total_sequences:
-        message = f"Waiting for {sequence_delay} seconds before starting the next sequence...\n"
-        text_widget.insert('end', message)
-        text_widget.see('end')
-
+        print(f"Waiting for {sequence_delay} seconds before starting the next sequence...\n")
+        
         time.sleep(sequence_delay)
 
         # Call the function recursively to run the next sequence
         run_measurement_sequence()
     else:
-        message = f"All sequences completed!\n"
-        text_widget.insert('end', message)
-        text_widget.see('end')
+        print(f"All sequences completed!\n")
+    
         
-
 # Function to start the measurement sequence
 def start_measurement():
     global sequence_count
@@ -376,12 +370,12 @@ def set_seqeunce_number(seq_num_trigger):
 
 mearsurement_frame = tk.Frame(main_frame,width=200,height=500)
 mearsurement_frame.grid(row=1,column=3,padx=1,pady=1)
-#mearsurement_frame_title = tk.Label(main_frame, text="Measurement Sequence:",font="Arial").grid(row=0,column=3,padx=5,pady=5)
-horizontal_view_label = tk.Label(mearsurement_frame,text="Set horizontal range (cm):").grid(row=0,column=0,padx=1,pady=1)
+mearsurement_frame_title = tk.Label(main_frame, text="Measurement Sequence:",font="Arial").grid(row=0,column=3,padx=5,pady=5)
+horizontal_view_label = tk.Label(mearsurement_frame,text="Set horizontal Frames (1 = 3.3 cm):").grid(row=0,column=0,padx=1,pady=1)
 horizontal_view_entry = tk.Entry(mearsurement_frame)
 horizontal_view_entry.grid(row=0,column=1,padx=5,pady=5)
 horizontal_view_entry.bind("<KeyRelease>", set_horizontal_step_range)
-vertical_view_label = tk.Label(mearsurement_frame,text="Set vertical range (cm):").grid(row=1,column=0,padx=1,pady=1)
+vertical_view_label = tk.Label(mearsurement_frame,text="Set vertical Frames (1 = 2.5 cm):").grid(row=1,column=0,padx=1,pady=1)
 vertical_view_entry = tk.Entry(mearsurement_frame)
 vertical_view_entry.grid(row=1,column=1,padx=5,pady=5)
 vertical_view_entry.bind("<KeyRelease>",set_verticale_step_range)
@@ -399,23 +393,21 @@ measurement_direction_vertical_button = tk.Button(mearsurement_frame,text="Verti
 confirm_button = tk.Button(mearsurement_frame,text="Confirm Image Range", command=image_range).grid(row=5,column=0,padx=5,pady=5)
 number_images_sequence = tk.Label(mearsurement_frame, text="Number of Images in Sequence:")
 number_images_sequence.grid(row=6,column=0,padx=5,pady=5)
-sequence_number_label = tk.Label(mearsurement_frame,text="Set Sequence Number for Archiving:").grid(row=7,column=0,padx=5,pady=5)
+sequence_number_label = tk.Label(mearsurement_frame,text="Set Sequence Nametag:").grid(row=7,column=0,padx=5,pady=5)
 sequence_number_entry = tk.Entry(mearsurement_frame)
 sequence_number_entry.grid(row=7,column=1,padx=5,pady=5)
 sequence_number_entry.bind("<KeyRelease>", set_seqeunce_number)
-start_measure_button = tk.Button(mearsurement_frame,text="Start Measurement Sequence", command=start_measurement).grid(row=8,column=0,padx=5,pady=5)
-#stop_measure_button = tk.Button(mearsurement_frame,text="Stop Measurement Sequence").grid(row=8,column=1,padx=5,pady=5)
-
-# Add input fields for setting the total number of sequences and delay between sequences
-total_sequences_label = tk.Label(mearsurement_frame, text="Total Number of Sequences:")
-total_sequences_label.grid(row=10, column=0, padx=5, pady=5)
+total_sequences_label = tk.Label(mearsurement_frame, text=" Repeat Sequence:")
+total_sequences_label.grid(row=8, column=0, padx=5, pady=5)
 total_sequences_entry = tk.Entry(mearsurement_frame)
-total_sequences_entry.grid(row=10, column=1, padx=5, pady=5)
-
+total_sequences_entry.grid(row=8, column=1, padx=5, pady=5)
 sequence_delay_label = tk.Label(mearsurement_frame, text="Delay Between Sequences (seconds):")
-sequence_delay_label.grid(row=11, column=0, padx=5, pady=5)
+sequence_delay_label.grid(row=9, column=0, padx=5, pady=5)
 sequence_delay_entry = tk.Entry(mearsurement_frame)
-sequence_delay_entry.grid(row=11, column=1, padx=5, pady=5)
+sequence_delay_entry.grid(row=9, column=1, padx=5, pady=5)
+
+start_measure_button = tk.Button(mearsurement_frame,text="Start Measurement Sequence", command=start_measurement).grid(row=10,column=0,padx=5,pady=5)
+#stop_measure_button = tk.Button(mearsurement_frame,text="Stop Measurement Sequence").grid(row=8,column=1,padx=5,pady=5)
 
 # Start GUI
 root.mainloop()
