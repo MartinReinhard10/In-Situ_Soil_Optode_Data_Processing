@@ -185,7 +185,7 @@ def capture_calibration(o2, num_images, exposure, iso, delay):
         time.sleep(delay)
 
 
-def capture_measurements(LED, exposure, iso, seq_num):
+def capture_measurements(exposure, iso, seq_num):
     global raw
     # Set camera controls
     controls = {"ExposureTime": exposure, #microseconds
@@ -197,33 +197,33 @@ def capture_measurements(LED, exposure, iso, seq_num):
     preview_config = picam2.create_preview_configuration(raw={"size": picam2.sensor_resolution, "format": "SBGGR12",},
                                                      controls = controls, transform=Transform(hflip=1, vflip=1)) 
     picam2.configure(preview_config)
-    if LED == True:
-        GPIO.output(led, GPIO.HIGH) 
-        picam2.start() 
-        time.sleep(2)
-        #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
-        raw = picam2.capture_array("raw").view(dtype="uint16")
-        GPIO.output(led, GPIO.LOW) 
-        print(picam2.capture_metadata())
-        picam2.stop()
-        raw_crop = raw[0:3040, 0:4056] # Remove padding from each row of pixels
+    
+    GPIO.output(led, GPIO.HIGH) 
+    picam2.start() 
+    time.sleep(2)
+    #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
+    raw = picam2.capture_array("raw").view(dtype="uint16")
+    GPIO.output(led, GPIO.LOW) 
+    print(picam2.capture_metadata())
+    picam2.stop()
+    raw_crop = raw[0:3040, 0:4056] # Remove padding from each row of pixels
 
-        base_filename = "RAW"
-        save_dir = '/home/martin/Desktop/Measurement_Images/'
-        # Create a new folder with date stamp if it does not exist
-        date_str = datetime.now().strftime("%Y-%m-%d")
-        save_dir = os.path.join(save_dir, f'{base_filename}_{date_str}')
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
-        # Check if the filename with the user-defined suffix already exists in the folder
-        count = 1
+    base_filename = "RAW"
+    save_dir = '/home/martin/Desktop/Measurement_Images/'
+    # Create a new folder with date stamp if it does not exist
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    save_dir = os.path.join(save_dir, f'{base_filename}_{date_str}')
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    # Check if the filename with the user-defined suffix already exists in the folder
+    count = 1
+    filename = f'{base_filename}_{date_str}_{count}_seq_num{seq_num}.tiff'
+    while os.path.exists(os.path.join(save_dir, filename)):
+        # If the filename exists, add a number to the suffix and try again
         filename = f'{base_filename}_{date_str}_{count}_seq_num{seq_num}.tiff'
-        while os.path.exists(os.path.join(save_dir, filename)):
-            # If the filename exists, add a number to the suffix and try again
-            filename = f'{base_filename}_{date_str}_{count}_seq_num{seq_num}.tiff'
-            count += 1
-            # Save the image with the updated filename
-        tifffile.imwrite(os.path.join(save_dir, filename), raw_crop) 
+        count += 1
+        # Save the image with the updated filename
+    tifffile.imwrite(os.path.join(save_dir, filename), raw_crop) 
               
    
             

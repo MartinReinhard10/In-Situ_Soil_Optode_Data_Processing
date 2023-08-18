@@ -3,16 +3,16 @@ import Motor_Function as mf
 from time import sleep
 
 
-def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, vert_direction,exposure,iso,led,seq_num):
+def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, vert_direction,exposure,iso,seq_num):
     global rotate_right 
     rotate_right = True
 
     for i in range(vert_range -1):
         sleep(2)
-        cf.capture_measurements(led,exposure,iso,seq_num)
+        cf.capture_measurements(exposure,iso,seq_num)
         sleep(2)
         for j in range(horiz_range):
-            cf.capture_measurements(led,exposure,iso,seq_num)
+            cf.capture_measurements(exposure,iso,seq_num)
             if rotate_right == True: 
                 mf.rotate_RIGHT(horiz_overlap)
                 sleep(2)
@@ -28,10 +28,10 @@ def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, v
 
     # Capture the last image without vertical movement
     sleep(2)
-    cf.capture_measurements(led,exposure,iso,seq_num)
+    cf.capture_measurements(exposure,iso,seq_num)
     sleep(2)
 
-def move_to_initial_position(vert_range, horiz_range, vert_direction):
+def move_to_initial_position(vert_range, horiz_range, vert_overlap, vert_direction):
     
     if rotate_right == True and horiz_range != 0:
         mf.rotate_RIGHT(horiz_range)
