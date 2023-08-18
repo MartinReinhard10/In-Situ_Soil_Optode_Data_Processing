@@ -100,7 +100,7 @@ camera_frame.grid(row=1,column=2,padx=10,pady=10)
 preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=1,column=0,padx=5,pady=5)
 stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
-camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(uv_state, exposure_time, iso_value)).grid(row=6,column=0,padx=1,pady=1)
+camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(exposure_time, iso_value)).grid(row=6,column=0,padx=1,pady=1)
 
 
 # Camera Settings: Exposure and ISO
@@ -135,7 +135,7 @@ def toggle_uv_state():
         cf.GPIO.output(cf.led, cf.GPIO.LOW)
     else:
         uv_label.config(text="ON")
-        #cf.GPIO.output(cf.led, cf.GPIO.HIGH)
+        cf.GPIO.output(cf.led, cf.GPIO.HIGH)
     
     uv_state = uv_label.cget("text") == "ON"
 
@@ -184,7 +184,7 @@ def set_delay(delay_trigger):
     display_message(f"Delay time: {delay_time}\n")
 
 def capture_calibration_images():
-    cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, uv_state, delay_time)
+    cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, delay_time)
     display_message("Image Sequence Completed.\n")
 
 o2_label = tk.Label(camera_frame, text="Set Image Name:").grid(row=10,column=0,padx=1,pady=1)
