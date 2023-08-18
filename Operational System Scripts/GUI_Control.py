@@ -340,17 +340,19 @@ def run_measurement_sequence():
     sequence_count += 1
     print(f"Completed sequence {sequence_count}\n")
    
-    
+    cf.GPIO.output(25,cf.GPIO.HIGH)
     # Check if the desired number of sequences have run
     if sequence_count < total_sequences:
         print(f"Waiting for {sequence_delay} seconds before starting the next sequence...\n")
         
         time.sleep(sequence_delay)
+        cf.GPIO.output(25,cf.GPIO.LOW)
 
         # Call the function recursively to run the next sequence
         run_measurement_sequence()
     else:
         print(f"All sequences completed!\n")
+        cf.GPIO.output(25,cf.GPIO.LOW)
     
         
 # Function to start the measurement sequence
