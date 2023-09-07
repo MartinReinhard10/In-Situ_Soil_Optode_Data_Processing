@@ -196,7 +196,7 @@ def capture_measurements(exposure, iso, seq_num):
             "FrameDurationLimits": (114,239000000)} #Min/Max frame duration
     # Setup config parameters
     preview_config = picam2.create_preview_configuration(raw={"size": picam2.sensor_resolution, "format": "SBGGR12",},
-                                                     controls = controls, transform=Transform(hflip=1, vflip=1)) 
+                                                     controls = controls) 
     picam2.configure(preview_config)
     
     GPIO.output(led, GPIO.HIGH) 
