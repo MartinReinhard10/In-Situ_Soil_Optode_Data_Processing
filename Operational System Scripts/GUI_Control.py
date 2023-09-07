@@ -308,7 +308,7 @@ def image_range():
     if hori_image_range == 0:
         num_images_seq = vert_image_range
     else:
-        num_images_seq = round(hori_image_range * vert_image_range)
+        num_images_seq = round(hori_image_range + vert_image_range)
     number_images_sequence.config(text="Number of Images in Sequence:{} - Vertical:{} - Horizontal:{}".format(num_images_seq, vert_image_range,hori_image_range))
     print(hori_image_range)
     print(vert_image_range)
@@ -334,25 +334,25 @@ def run_measurement_sequence():
     mefu.measurement_sequence(vert_image_range, hori_image_range, vert_overlap, hori_overlap, direction, exposure_time, iso_value, seq_num)
     
     # Call the function to move the camera back to initial position
-    mefu.move_to_initial_position(vert_range, hori_range, vert_overlap, direction)
+    mefu.move_to_initial_position(vert_image_range, hori_image_range, vert_overlap, direction, hori_overlap)
 
     # Increment the sequence count
     sequence_count += 1
     print(f"Completed sequence {sequence_count}\n")
    
-    cf.GPIO.output(25,cf.GPIO.HIGH)
+    #cf.GPIO.output(25,cf.GPIO.HIGH)
     # Check if the desired number of sequences have run
     if sequence_count < total_sequences:
         print(f"Waiting for {sequence_delay} seconds before starting the next sequence...\n")
         
         time.sleep(sequence_delay)
-        cf.GPIO.output(25,cf.GPIO.LOW)
+        #cf.GPIO.output(25,cf.GPIO.LOW)
 
         # Call the function recursively to run the next sequence
         run_measurement_sequence()
     else:
         print(f"All sequences completed!\n")
-        cf.GPIO.output(25,cf.GPIO.LOW)
+        #cf.GPIO.output(25,cf.GPIO.LOW)
     
         
 # Function to start the measurement sequence
