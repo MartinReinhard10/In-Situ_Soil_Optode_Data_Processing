@@ -109,7 +109,8 @@ Belt Tensioner 2020 Profile X-Axis
 
 - Emission Filter
     
-    Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.    
+    Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.
+    (https://leefilters.com/colour/821-zircon-uv-blue-blocker/)    
 
 Wires - 0.14mm² for sensor and motor connections
 
