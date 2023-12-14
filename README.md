@@ -4,7 +4,8 @@ This document provides a list of electronic, mechanical, and other components us
 
 The total spending budget for this system is approx. **510 EUR.**
 
-![PXL_20231106_093456066.jpg]([System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/PXL_20231106_093456066.jpg](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg))
+![Image Alt text]([/images/img.jpg](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg)
+
 
 ![PXL_20231115_152306121.jpg](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/PXL_20231115_152306121.jpg)
 
