@@ -3,9 +3,6 @@
 This document provides a list of electronic, mechanical, and other components used in the OptodeSystem, including a Raspberry Pi 4, HQ Camera, UV-LED, stepper motors, and various sensors. The document also includes a wiring diagram and links to additional resources for each component.
 
 The total spending budget for this system is approx. **510 EUR.**
-
-![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg) ![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231115_152306121.jpg)
-
 ---
 
 # Electronic Components
@@ -15,8 +12,6 @@ The total spending budget for this system is approx. **510 EUR.**
     [Raspberry Pi Documentation - Computers](https://www.raspberrypi.com/documentation/computers/)
     
     [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
-    
-    ![https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png](https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png)
     
     ---
     
@@ -125,3 +120,6 @@ Bolts and Nuts for Assembly
 # Wiring Diagram
 
 ![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/Wiring%20sketch%20Raspberry%20Pi%204%202.0_Edit.png)
+
+![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg) 
+![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231115_152306121.jpg)
