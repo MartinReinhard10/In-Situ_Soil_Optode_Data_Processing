@@ -9,12 +9,6 @@ The total spending budget for this system is approx. **510 EUR.**
 
 ![PXL_20231115_152306121.jpg](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/PXL_20231115_152306121.jpg)
 
-# 3D Model:
-
-Open the 3D model in CAD software.
-
-[Full_Optodesystem.step](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/Full_Optodesystem.step)
-
 ---
 
 # Electronic Components
@@ -100,11 +94,8 @@ Open the 3D model in CAD software.
 
 20 x 40mm V-slot Aluminum Extrusion
 
-- 20mm V-Gantry Plate with Wheels
-    
-    ![https://m.media-amazon.com/images/I/61N5k5OhgoL._SL1000_.jpg](https://m.media-amazon.com/images/I/61N5k5OhgoL._SL1000_.jpg)
-    
-
+20mm V-Gantry Plate with Wheels
+       
 GT2 Belt - 2mm pitch - 6mm width
 
 GT2 Pulley 20 (diameter: 5mm)
@@ -121,10 +112,7 @@ Belt Tensioner 2020 Profile X-Axis
 
 - Emission Filter
     
-    Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens. 
-    
-    ![Filters 2.png](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/Filters_2.png)
-    
+    Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.    
 
 Wires - 0.14mm² for sensor and motor connections
 
