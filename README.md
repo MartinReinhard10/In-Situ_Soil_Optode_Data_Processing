@@ -35,9 +35,7 @@ The total spending budget for this system is approx. **510 EUR.**
 - **UV-LED  -** 395 nm
     
     [Datasheet UV-LED](https://www.mouser.dk/datasheet/2/810/NewEnergy_StarBoard_Horticulture_Luminus_DataSheet-2509530.pdf)
-    
-    ![Screenshot 2023-03-06 125314.png](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/Screenshot_2023-03-06_125314.png)
-    
+      
 - **Resistor** - HS25 18R
     
     [acl_hs10-1890310.pdf](https://www.mouser.dk/datasheet/2/303/acl_hs10-1890310.pdf)
