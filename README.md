@@ -2,7 +2,7 @@
 
 This document provides a list of electronic, mechanical, and other components used in the OptodeSystem, including a Raspberry Pi 4, HQ Camera, UV-LED, stepper motors, and various sensors. The document also includes a wiring diagram and links to additional resources for each component.
 
-The total spending budget for this system is approx. **510 EUR.**
+.step file with full 3D model of the system can be provided if needed.
 ---
 
 # Electronic Components
@@ -114,6 +114,10 @@ Cable Connectors
 Cable Ties
 
 Bolts and Nuts for Assembly
+
+---
+The total spending budget for this system is approx. **510 EUR.**
+---
 
 # Wiring Diagram
 
