@@ -4,10 +4,7 @@ This document provides a list of electronic, mechanical, and other components us
 
 The total spending budget for this system is approx. **510 EUR.**
 
-![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg)
-
-
-![PXL_20231115_152306121.jpg](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/PXL_20231115_152306121.jpg)
+![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg) ![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231115_152306121.jpg)
 
 ---
 
@@ -128,4 +125,4 @@ Bolts and Nuts for Assembly
 
 # Wiring Diagram
 
-![Wiring sketch Raspberry Pi 4 2.0_Edit.png](System%20Hardware%2015cc30a757cd4b21a598e149a31b72f9/Wiring_sketch_Raspberry_Pi_4_2.0_Edit.png)
+![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/Wiring%20sketch%20Raspberry%20Pi%204%202.0_Edit.png)
