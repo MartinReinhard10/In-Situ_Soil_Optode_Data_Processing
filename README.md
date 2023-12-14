@@ -13,8 +13,6 @@ The total spending budget for this system is approx. **510 EUR.**
     
     [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
     
-    ---
-    
     Heatsink Case for Raspberry PI:
     
     [Armor Aluminium Heatsink Case for Raspberry Pi 4 • RaspberryPi.dk](https://raspberrypi.dk/en/product/armor-aluminium-heatsink-case-for-raspberry-pi-4/)
