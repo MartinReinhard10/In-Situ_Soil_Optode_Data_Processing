@@ -13,8 +13,6 @@ This document provides a list of electronic, mechanical, and other components us
     
     [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
     
-    Heatsink Case for Raspberry PI:
-    
     [Armor Aluminium Heatsink Case for Raspberry Pi 4 • RaspberryPi.dk](https://raspberrypi.dk/en/product/armor-aluminium-heatsink-case-for-raspberry-pi-4/)
     
 - **Raspberry Pi HQ Camera**
