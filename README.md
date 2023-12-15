@@ -101,9 +101,7 @@ Belt Tensioner 2020 Profile X-Axis
     Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.
     (https://leefilters.com/colour/821-zircon-uv-blue-blocker/)    
 
-Wires - 0.14mm² for sensor and motor connections
-
-Wires - 0.34mm² for power supplies
+Wires
 
 Dupont Wire Pin Header Connectors
 
