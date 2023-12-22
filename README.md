@@ -21,7 +21,7 @@ This document provides a list of electronic, mechanical, and other components us
     
 - ****16mm Telephoto Lens for Raspberry Pi HQ Camera (C-mount)****
     
-    [16mm Telephoto Lens for Raspberry Pi HQ Camera (C-mount) • RaspberryPi.dk](https://raspberrypi.dk/en/product/16mm-telephoto-lens-raspberry-pi-hq-camera/)
+    [16mm Telephoto Lens for Raspberry Pi HQ Camera (C-mount) • Mouser.com]([https://raspberrypi.dk/en/product/16mm-telephoto-lens-raspberry-pi-hq-camera/](https://www.mouser.com/pdfDocs/DFRobot16mm10MPTelephotoLensPO.pdf))
     
 - **UV-LED  -** 395 nm
     
@@ -44,6 +44,7 @@ This document provides a list of electronic, mechanical, and other components us
     - **A4988 Expansion Board**
         
         [Raspberry Pi Stepper Motor Control with NEMA 17 — Maker Portal](https://makersportal.com/blog/raspberry-pi-stepper-motor-control-with-nema-17)
+        (https://store.siqma.com/stepper-motor-driver-board.html?search=expansion)
         
 - **Temperature & Humidity Sensor** - DHT22
     
