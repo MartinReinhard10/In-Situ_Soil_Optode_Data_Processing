@@ -42,9 +42,10 @@ This document provides a list of electronic, mechanical, and other components us
     [In-Depth: Control Stepper Motor with A4988 Driver Module & Arduino](https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/)
     
     - **A4988 Expansion Board**
-        
-        [Raspberry Pi Stepper Motor Control with NEMA 17 — Maker Portal](https://makersportal.com/blog/raspberry-pi-stepper-motor-control-with-nema-17)
         (https://store.siqma.com/stepper-motor-driver-board.html?search=expansion)
+      
+        [Raspberry Pi Stepper Motor Control with NEMA 17 — Maker Portal](https://makersportal.com/blog/raspberry-pi-stepper-motor-control-with-nema-17)
+        
         
 - **Temperature & Humidity Sensor** - DHT22
     
