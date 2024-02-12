@@ -90,7 +90,7 @@ GT2 Pulley 20 (diameter: 5mm)
 
 Belt Tensioner 2020 Profile X-Axis
 
-688zz Miniature Ball Bearing 8x16x5mm (x4)
+Ball Bearings 8x22x7mm (x4)
 
 ---
 
