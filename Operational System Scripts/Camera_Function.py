@@ -3,6 +3,8 @@ from picamera2.controls import Controls
 from libcamera import Transform
 import RPi.GPIO as GPIO
 import tifffile
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time
 import numpy as np
@@ -31,6 +33,7 @@ picam2.configure(camera_config)
 
 # Preview
 def start_preview():
+    picam2.configure(camera_config)
     picam2.start_preview(Preview.QTGL)
     picam2.start()
 
@@ -82,6 +85,7 @@ def capture_raw(exposure, iso):
 #Display Histogram and pixel information of previous image
 
 def display_histogram():
+    
     #Get color channels in bayer order (BGGR)
     red = raw[1::2,1::2]
     green1 = raw[0::2,1::2]
@@ -132,10 +136,11 @@ def display_histogram():
     plt.text(0.7, 0.55, f"Mean Blue: {mean_blue}\nMAx Blue {max_value_blue}\nNum Blue Pixels: {num_blue_pixels}", transform=plt.gca().transAxes, color='blue')
 
     # Save the histogram figure to the desktop
-    desktop_path = "/home/martinoptode/Desktop/"
-    filename = "histogram_figure.png"
-    plt.savefig(os.path.join(desktop_path, filename))
-    plt.close()  # Close the figure to release resources
+    with matplotlib.rc_context({'backend': 'Agg'}):
+        desktop_path = "/home/martinoptode/Desktop/"
+        filename = "histogram_figure.png"
+        plt.savefig(os.path.join(desktop_path, filename))
+        plt.close()  # Close the figure to release resources
     
         
 #Capture multiple images for calibration
