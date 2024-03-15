@@ -99,7 +99,7 @@ camera_frame.grid(row=1,column=2,padx=10,pady=10)
 #camera_frame_title = tk.Label(main_frame, text= "Camera Functions:",font="Arial").grid(row=0,column=2,padx=5,pady=5)
 preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=1,column=0,padx=5,pady=5)
 stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
-camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
+camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image (Desktop)", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
 camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(exposure_time, iso_value)).grid(row=6,column=0,padx=1,pady=1)
 
 
