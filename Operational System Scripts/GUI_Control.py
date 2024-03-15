@@ -164,7 +164,7 @@ white_label.grid(row=0,column=1,padx=5,pady=5)
 white_button =tk.Button(camera_frame,text="Toggle White LED:", command=toggle_white_led_state).grid(row=0,column=0,padx=5,pady=5)
 
 #Show Histogram 
-histogram_button = tk.Button(camera_frame, text= "RAW Channels Histogram", command=cf.display_histogram).grid(row=6,column=1, padx=1,pady=1 )
+histogram_button = tk.Button(camera_frame, text= " Save RAW Histogram", command=cf.display_histogram).grid(row=6,column=1, padx=1,pady=1 )
 
 #Capture Calibration images 
 
