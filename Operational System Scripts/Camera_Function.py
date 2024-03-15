@@ -43,12 +43,15 @@ def stop_preview():
 # Capture single JPEG image
 def capture_jpeg():
     picam2.start()
-    time.sleep(3)
     image = picam2.capture_image()
+    picam2.stop_preview()
     picam2.stop()
-    plt.imshow(image)
-    print("Image Ready")
-    plt.show()
+    
+    # Save the image to a file
+    save_dir = '/home/martinoptode/Desktop/'  # Specify the directory where you want to save the image
+    filename = 'captured_image.jpg'  # Specify the filename
+    image.save(os.path.join(save_dir, filename))
+    print("Image saved:", os.path.join(save_dir, filename))
     
 
 # Capture single RAW image
@@ -72,17 +75,13 @@ def capture_raw(exposure, iso):
     raw = picam2.capture_array("raw").view(dtype="uint16")
     GPIO.output(led, GPIO.LOW) 
     print(picam2.capture_metadata())
+    picam2.stop_preview()
     picam2.stop()
-    plt.imshow(raw, cmap="gray")
-    print("RAW Ready")
-    plt.show()
  
-   
-    #Display Histogram and pixel information of previous image
+
+#Display Histogram and pixel information of previous image
 
 def display_histogram():
-    #Clean the figure display
-    plt.clf()
     #Get color channels in bayer order (BGGR)
     red = raw[1::2,1::2]
     green1 = raw[0::2,1::2]
@@ -107,9 +106,8 @@ def display_histogram():
     plt.title("Red_Green histogram")
     plt.xlabel("Pixel intensity")
     plt.ylabel("Pixel Frequency")
-    plt.show()
-    
-    #Get mean of pixel intensities for each channel
+
+#Get mean of pixel intensities for each channel
     mean_red = np.mean(red)
     mean_green = np.mean(green)
     mean_blue = np.mean(blue)
@@ -127,6 +125,18 @@ def display_histogram():
     print("Number of red pixels:", num_red_pixels)
     print("Number of green pixels:", num_green_pixels)
     print("Number of blue pixels:", num_blue_pixels)
+
+    # Add annotations to the plot
+    plt.text(0.7, 0.9, f"Mean Red: {mean_red:.2f}\nMax Red: {max_value_red:.2f}\nNum Red Pixels: {num_red_pixels:.2f}", transform=plt.gca().transAxes, color='red')
+    plt.text(0.7, 0.75, f"Mean Green: {mean_green}\nMax Green: {max_value_green}\nNum Green Pixels: {num_green_pixels}", transform=plt.gca().transAxes, color='green')
+    plt.text(0.7, 0.55, f"Mean Blue: {mean_blue}\nMAx Blue {max_value_blue}\nNum Blue Pixels: {num_blue_pixels}", transform=plt.gca().transAxes, color='blue')
+
+    # Save the histogram figure to the desktop
+    desktop_path = "/home/martinoptode/Desktop/"
+    filename = "histogram_figure.png"
+    plt.savefig(os.path.join(desktop_path, filename))
+    plt.close()  # Close the figure to release resources
+    
         
 #Capture multiple images for calibration
 def capture_calibration(o2, num_images, exposure, iso, delay):
