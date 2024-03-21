@@ -39,7 +39,7 @@ motor_control.grid(row=1,column=1, padx=10, pady=10)
 def set_step_speed(speed):
     mf.set_step_speed(speed_scale.get())
 speed_label = tk.Label(motor_control, text="Step Speed Control (Fast --> Slow):").grid(row=0,column=0,padx=1,pady=1)
-speed_scale = tk.Scale(motor_control, from_=0.0001, to=0.0005, resolution=0.0001, orient=tk.HORIZONTAL)
+speed_scale = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL)
 speed_scale.configure(length=200)
 speed_scale.grid(row=0,column=1,padx=1,pady=1)
 speed_scale.bind("<ButtonRelease-1>", set_step_speed)
