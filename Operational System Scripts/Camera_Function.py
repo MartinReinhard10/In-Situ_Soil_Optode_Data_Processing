@@ -177,7 +177,7 @@ def capture_calibration(o2, num_images, exposure, iso, delay):
         raw_crop = raw[0:3040, 0:4056] # Remove padding from each row of pixels
 
         base_filename = "RAW"
-        save_dir = '/home/martin/Desktop/Calibration_Images/'
+        save_dir = '/home/martinoptode/Desktop/Calibration_Images/'
 
         # Create a new folder with date stamp if it does not exist
         date_str = datetime.now().strftime("%Y-%m-%d")
@@ -225,7 +225,7 @@ def capture_measurements(exposure, iso, seq_num):
     raw_crop = raw[0:3040, 0:4056] # Remove padding from each row of pixels
 
     base_filename = "RAW"
-    save_dir = '/home/martin/Desktop/Measurement_Images/'
+    save_dir = '/home/martinoptode/Desktop/Measurement_Images/'
     # Create a new folder with date stamp if it does not exist
     date_str = datetime.now().strftime("%Y-%m-%d")
     save_dir = os.path.join(save_dir, f'{base_filename}_{date_str}')
