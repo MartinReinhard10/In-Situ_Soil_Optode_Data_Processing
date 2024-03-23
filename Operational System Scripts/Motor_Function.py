@@ -30,11 +30,17 @@ LEFT = GPIO.LOW
 RIGHT = GPIO.HIGH
 
 # Move motor in steps
-def step(step_pin):
+def step_vertical(step_pin):
     GPIO.output(step_pin, GPIO.HIGH)
-    time.sleep(step_speed)
+    time.sleep(step_speed_vertical)
     GPIO.output(step_pin, GPIO.LOW)
-    time.sleep(step_speed)
+    time.sleep(step_speed_vertical)
+
+def step_rotate(step_pin):
+    GPIO.output(step_pin, GPIO.HIGH)
+    time.sleep(step_speed_rotate)
+    GPIO.output(step_pin, GPIO.LOW)
+    time.sleep(step_speed_rotate)
 
 
 # Move vertical motor UP a certain number of steps or until an endstop is triggered
@@ -44,7 +50,7 @@ def move_vertical_UP(steps):
         if  GPIO.input(TOP_ENDSTOP_PIN) == GPIO.LOW:
             print("Top endstop reached")
             break
-        step(VERTICAL_STEP_PIN)
+        step_vertical(VERTICAL_STEP_PIN)
 
 # Move vertical motor DOWN a certain number of steps or until an endstop is triggered
 def move_vertical_DOWN(steps):
@@ -53,19 +59,19 @@ def move_vertical_DOWN(steps):
         if  GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.LOW:
             print("Bottom endstop reached")
             break
-        step(VERTICAL_STEP_PIN)
+        step_vertical(VERTICAL_STEP_PIN)
 
 # Rotate motor LEFT a certain number of steps
 def rotate_LEFT(steps):
     GPIO.output(ROTATE_DIR_PIN, LEFT)
     for i in range(steps):
-        step(ROTATE_STEP_PIN)
+        step_rotate(ROTATE_STEP_PIN)
     
 # Rotate motor RIGHT a certain number of steps
 def rotate_RIGHT(steps):
     GPIO.output(ROTATE_DIR_PIN, RIGHT)
     for i in range(steps):
-        step(ROTATE_STEP_PIN)
+        step_rotate(ROTATE_STEP_PIN)
 
 # Set the number of steps for VERTICAL
 def set_steps_vertical(steps_v):

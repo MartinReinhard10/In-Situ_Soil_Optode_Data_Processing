@@ -46,7 +46,7 @@ speed_scale_vertical.bind("<ButtonRelease-1>", set_step_speed_vertical)
 
 # Set Step Speed ROTATE
 def set_step_speed_rotate(speed_rotate):
-    mf.set_step_speed(speed_scale_rotate.get())
+    mf.set_step_speed_rotate(speed_scale_rotate.get())
 speed_label_rotate = tk.Label(motor_control, text="Rotate Speed Control (Fast --> Slow):").grid(row=3,column=0,padx=1,pady=1)
 speed_scale_rotate = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL,length=100)
 speed_scale_rotate.configure(length=200)

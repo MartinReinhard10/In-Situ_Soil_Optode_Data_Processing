@@ -4,11 +4,25 @@ from time import sleep
 
 
 def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, vert_direction,exposure,iso,seq_num):
-    global rotate_right 
-    rotate_right = True
+    """lobal rotate_right 
+    rotate_right = True"""
     
+    for i in range(horiz_range-1):
+        for j in range(vert_range):
+            if vert_direction == True:
+                sleep(2)
+                cf.capture_measurements(exposure,iso,seq_num)
+                mf.move_vertical_UP(vert_overlap)
+            else:
+                sleep(2)
+                cf.capture_measurements(exposure,iso,seq_num)
+                mf.move_vertical_DOWN(vert_overlap)
+        cf.capture_measurements(exposure,iso,seq_num)
+        vert_direction = not vert_direction
+        mf.rotate_LEFT(horiz_overlap)
 
-    for i in range(vert_range):
+    # Remove Comment out if all images should be captured horizontally first before vertical movement 
+    """for i in range(vert_range):
         
         #sleep(2)
         #cf.capture_measurements(exposure,iso,seq_num)
@@ -34,14 +48,21 @@ def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, v
             else:
                 mf.move_vertical_DOWN(vert_overlap) 
         else:
-            print("No movement")
+            print("No movement")"""
          
            
         
 
 def move_to_initial_position(vert_range, horiz_range, vert_overlap, vert_direction, horiz_overlap):
     
-    if rotate_right == False and horiz_range != 0:
+    if vert_direction == False and horiz_range != 0:
+        mf.rotate_RIGHT((horiz_range-1)*horiz_overlap)
+    else:
+        mf.move_vertical_DOWN((vert_range-1)*vert_overlap)
+        mf.rotate_RIGHT((horiz_range-1)*horiz_overlap)
+
+    # Remove comment out if all images should be captured horizontally first before vertical movement        
+    """if rotate_right == False and horiz_range != 0:
         mf.rotate_LEFT((horiz_range - 1) * horiz_overlap)
     #elif rotate_right == False and horiz_range !=0:
         #mf.rotate_RIGHT((horiz_range - 1) * horiz_overlap)
@@ -50,5 +71,5 @@ def move_to_initial_position(vert_range, horiz_range, vert_overlap, vert_directi
         print("moving down")
         mf.move_vertical_DOWN((vert_range - 1) * vert_overlap)  # Move up
     else:
-        mf.move_vertical_UP((vert_range - 1) * vert_overlap)  # Move down
+        mf.move_vertical_UP((vert_range - 1) * vert_overlap)  # Move down"""
 
