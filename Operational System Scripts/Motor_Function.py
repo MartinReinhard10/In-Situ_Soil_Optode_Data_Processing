@@ -77,15 +77,26 @@ def set_steps_horizontal(steps_h):
     global num_steps_horizontal
     num_steps_horizontal = int(steps_h)
 
-# Set the step speed
-def set_step_speed(speed):
-    global step_speed
-    step_speed = speed
+# Set the step speed VERTICAL
+def set_step_speed_vertical(speed_vertical):
+    global step_speed_vertical
+    step_speed_vertical = speed_vertical
+
+# Set the step speed ROTATE
+def set_step_speed_rotate(speed_rotate):
+    global step_speed_rotate
+    step_speed_rotate = speed_rotate
 
 #Move HOME, Bottom position
 def move_home():
     GPIO.output(VERTICAL_DIR_PIN, DOWN)
     while GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.HIGH:
+        step(VERTICAL_STEP_PIN)
+
+# Move top position 
+def move_top():
+    GPIO.output(VERTICAL_DIR_PIN, UP)
+    while GPIO.input(TOP_ENDSTOP_PIN) == GPIO.HIGH:
         step(VERTICAL_STEP_PIN)
 
 # Move to set distance

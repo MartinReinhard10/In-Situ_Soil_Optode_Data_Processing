@@ -80,7 +80,32 @@ def capture_raw(exposure, iso):
     print(picam2.capture_metadata())
     picam2.stop_preview()
     picam2.stop()
- 
+
+    print("Make Histogram to see Pixel Values")
+
+    # Capture single RAW image WIthotut UV LED on
+def capture_raw_background(exposure, iso):
+    global raw
+    # Set camera controls
+    controls = {"ExposureTime": exposure, #microseconds
+            "AnalogueGain": iso, # 1 = ISO 100
+            "AeEnable": False, # Auto exposure and Gain
+            "AwbEnable": False,# Auto white Balance
+            "FrameDurationLimits": (114,239000000)} #Min/Max frame duration
+    # Setup config parameters
+    preview_config = picam2.create_preview_configuration(raw={"size": picam2.sensor_resolution, "format": "SBGGR12",},
+                                                     controls = controls) 
+    picam2.configure(preview_config)
+    
+    picam2.start() 
+    time.sleep(2)
+    #Capture image in unpacked RAW format 12bit dynamic range (16bit array)
+    raw = picam2.capture_array("raw").view(dtype="uint16")
+    print(picam2.capture_metadata())
+    picam2.stop_preview()
+    picam2.stop()
+    
+    print("Make Histogram to see Pixel Values")
 
 #Display Histogram and pixel information of previous image
 
@@ -115,20 +140,22 @@ def display_histogram():
     mean_red = np.mean(red)
     mean_green = np.mean(green)
     mean_blue = np.mean(blue)
-    print("Mean value of red:", mean_red)
-    print("Mean value of green:", mean_green)
-    print("Mean value of blue:", mean_blue)
-    #Get MAX pixel intensity for eavh channel
-    print("Max value of red:", max_value_red)
-    print("Max value of green:", max_value_green)
-    print("Max value of blue", max_value_blue)
-    # Count number of red and green pixels
+    
     num_red_pixels = np.count_nonzero(red)
     num_green_pixels = np.count_nonzero(green)
     num_blue_pixels =np.count_nonzero(blue)
-    print("Number of red pixels:", num_red_pixels)
-    print("Number of green pixels:", num_green_pixels)
-    print("Number of blue pixels:", num_blue_pixels)
+
+    #print("Mean value of red:", mean_red)
+    #print("Mean value of green:", mean_green)
+    #print("Mean value of blue:", mean_blue)
+    
+    #print("Max value of red:", max_value_red)
+    #print("Max value of green:", max_value_green)
+    #print("Max value of blue", max_value_blue)
+    
+    #print("Number of red pixels:", num_red_pixels)
+    #print("Number of green pixels:", num_green_pixels)
+    #print("Number of blue pixels:", num_blue_pixels)
 
     # Add annotations to the plot
     plt.text(0.7, 0.9, f"Mean Red: {mean_red:.2f}\nMax Red: {max_value_red:.2f}\nNum Red Pixels: {num_red_pixels:.2f}", transform=plt.gca().transAxes, color='red')
@@ -142,6 +169,7 @@ def display_histogram():
         plt.savefig(os.path.join(desktop_path, filename))
         plt.close()  # Close the figure to release resources
     
+    print("Histogrm saved to desktop")
         
 #Capture multiple images for calibration
 def capture_calibration(o2, num_images, exposure, iso, delay):

@@ -14,7 +14,7 @@ def exit_app():
 
 # GUI Layout and function
 root = tk.Tk()
-root.title("Control For Optode Platform")
+root.title("Controls")
 
 main_frame = tk.Frame(root, width=1000, height=1000)
 main_frame.grid(row=0, column=0,padx=20,pady=20)
@@ -35,23 +35,32 @@ motor_control=tk.Frame(main_frame,width=500,height=500)
 motor_control.grid(row=1,column=1, padx=10, pady=10)
 #tk.Label(main_frame,text="Manual Motor Controls:", font="Arial").grid(row=0,column=1,padx=5,pady=5)
 
-# Set Step Speed
-def set_step_speed(speed):
-    mf.set_step_speed(speed_scale.get())
-speed_label = tk.Label(motor_control, text="Step Speed Control (Fast --> Slow):").grid(row=0,column=0,padx=1,pady=1)
-speed_scale = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL)
-speed_scale.configure(length=200)
-speed_scale.grid(row=0,column=1,padx=1,pady=1)
-speed_scale.bind("<ButtonRelease-1>", set_step_speed)
+# Set Step Speed VERTICAL
+def set_step_speed_vertical(speed_vertical):
+    mf.set_step_speed_vertical(speed_scale_vertical.get())
+speed_label_vertical = tk.Label(motor_control, text="Vertical Speed Control (Fast --> Slow):").grid(row=0,column=0,padx=1,pady=1)
+speed_scale_vertical = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL)
+speed_scale_vertical.configure(length=200)
+speed_scale_vertical.grid(row=0,column=1,padx=1,pady=1)
+speed_scale_vertical.bind("<ButtonRelease-1>", set_step_speed_vertical)
+
+# Set Step Speed ROTATE
+def set_step_speed_rotate(speed_rotate):
+    mf.set_step_speed(speed_scale_rotate.get())
+speed_label_rotate = tk.Label(motor_control, text="Rotate Speed Control (Fast --> Slow):").grid(row=3,column=0,padx=1,pady=1)
+speed_scale_rotate = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL)
+speed_scale_rotate.configure(length=200)
+speed_scale_rotate.grid(row=3,column=1,padx=1,pady=1)
+speed_scale_rotate.bind("<ButtonRelease-1>", set_step_speed_rotate)
 
 # Create the vertical motor control frame
 def set_steps_vertical(steps_v):
     mf.set_steps_vertical(vertical_steps_entry.get())
-vertical_direction_button = tk.Button(motor_control, text="Down", command=lambda: mf.move_vertical_DOWN(mf.num_steps_vertical)).grid(row=4,column=0,padx=1,pady=1)
-vertical_direction_button = tk.Button(motor_control, text="Up", command=lambda: mf.move_vertical_UP(mf.num_steps_vertical)).grid(row=4,column=1,padx=1,pady=1)
-vertical_steps_label = tk.Label(motor_control, text="Vertical Steps (1cm = 800 steps): ").grid(row=2,column=0,padx=10,pady=10)
+vertical_direction_button = tk.Button(motor_control, text="Down", command=lambda: mf.move_vertical_DOWN(mf.num_steps_vertical)).grid(row=2,column=0,padx=1,pady=1)
+vertical_direction_button = tk.Button(motor_control, text="Up", command=lambda: mf.move_vertical_UP(mf.num_steps_vertical)).grid(row=2,column=1,padx=1,pady=1)
+vertical_steps_label = tk.Label(motor_control, text="Vertical Steps (1cm = 800 steps): ").grid(row=1,column=0,padx=10,pady=10)
 vertical_steps_entry = tk.Entry(motor_control)
-vertical_steps_entry.grid(row=2,column=1,padx=1,pady=1)
+vertical_steps_entry.grid(row=1,column=1,padx=1,pady=1)
 vertical_steps_entry.bind("<KeyRelease>", set_steps_vertical)
 
 # Create the rotate motor control frame
@@ -59,25 +68,29 @@ def set_steps_horizontal(steps_h):
     mf.set_steps_horizontal(horizontal_steps_entry.get())
 horizontal_direction_button = tk.Button(motor_control, text="Left", command=lambda:mf.rotate_LEFT(mf.num_steps_horizontal)).grid(row=5,column=0,padx=1,pady=1)
 horizontal_direction_button = tk.Button(motor_control, text="Right", command=lambda: mf.rotate_RIGHT(mf.num_steps_horizontal)).grid(row=5,column=1,padx=1,pady=1)
-horizontal_steps_label = tk.Label(motor_control, text=" Horizontal Steps (1cm = 408 steps): ").grid(row=3,column=0,padx=10,pady=10)
+horizontal_steps_label = tk.Label(motor_control, text=" Horizontal Steps (1cm = 408 steps): ").grid(row=4,column=0,padx=10,pady=10)
 horizontal_steps_entry = tk.Entry(motor_control)
-horizontal_steps_entry.grid(row=3,column=1,padx=1,pady=1)
+horizontal_steps_entry.grid(row=4,column=1,padx=1,pady=1)
 horizontal_steps_entry.bind("<KeyRelease>", set_steps_horizontal)
 
 #Move "HOME" 
 home_button = tk.Button(motor_control, text="Move to Bottom Position", command=mf.move_home).grid(row=6,column=0,padx=10,pady=10)
 
-#Move to set Distance
-def set_distance(distance_trigger):
-    global new_distance_value
-    global current_distance_value
-    new_distance_value = move_distance_entry.get()
-    current_distance_value = dsf.median_distance
+#Move to top
+top_button = tk.Button(motor_control, text="Move to the Top Position", command=mf.move_top).grid(row=6,column=1,padx=10,pady=10)
 
-move_distance_button = tk.Button(motor_control, text="Move to Distance !NOT WORKING!", command=lambda: mf.move_distance(new_distance_value,current_distance_value)).grid(row=7,column=0,padx=10,pady=10)
-move_distance_entry = tk.Entry(motor_control)
-move_distance_entry.grid(row=7,column=1,padx=10,pady=10)
-move_distance_entry.bind("<KeyRelease>", set_distance)
+
+## Move to Distance - WORK IN PROGRESS ##
+#def set_distance(distance_trigger):
+   # global new_distance_value
+   # global current_distance_value
+   # new_distance_value = move_distance_entry.get()
+   # current_distance_value = dsf.median_distance
+
+#move_distance_button = tk.Button(motor_control, text="Move to Distance", command=lambda: mf.move_distance(new_distance_value,current_distance_value)).grid(row=7,column=0,padx=10,pady=10)
+#move_distance_entry = tk.Entry(motor_control)
+#move_distance_entry.grid(row=7,column=1,padx=10,pady=10)
+#move_distance_entry.bind("<KeyRelease>", set_distance)
 
 # Distance Sensor
 distance_label = tk.Label(motor_control, text="Distance from Bottom: ")
@@ -101,6 +114,7 @@ preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.s
 stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
 camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image (Desktop)", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
 camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(exposure_time, iso_value)).grid(row=6,column=0,padx=1,pady=1)
+camera_raw_background_button = tk.Button(camera_frame, text="RAW image (UV-LED OFF)", command=lambda: cf.capture_raw_background(exposure_time, iso_value)).grid(row=7,column=0,padx=1,pady=1)
 
 
 # Camera Settings: Exposure and ISO
@@ -308,7 +322,7 @@ def image_range():
     if hori_image_range == 0:
         num_images_seq = vert_image_range
     else:
-        num_images_seq = round(hori_image_range + vert_image_range)
+        num_images_seq = round(hori_image_range * vert_image_range)
     number_images_sequence.config(text="Number of Images in Sequence:{} - Vertical:{} - Horizontal:{}".format(num_images_seq, vert_image_range,hori_image_range))
     print(hori_image_range)
     print(vert_image_range)
@@ -395,7 +409,7 @@ measurement_direction_vertical_button = tk.Button(mearsurement_frame,text="Verti
 confirm_button = tk.Button(mearsurement_frame,text="Confirm Image Range", command=image_range).grid(row=5,column=0,padx=5,pady=5)
 number_images_sequence = tk.Label(mearsurement_frame, text="Number of Images in Sequence:")
 number_images_sequence.grid(row=6,column=0,padx=5,pady=5)
-sequence_number_label = tk.Label(mearsurement_frame,text="Set Sequence Nametag:").grid(row=7,column=0,padx=5,pady=5)
+sequence_number_label = tk.Label(mearsurement_frame,text="Set Sequence Nametag (Number):").grid(row=7,column=0,padx=5,pady=5)
 sequence_number_entry = tk.Entry(mearsurement_frame)
 sequence_number_entry.grid(row=7,column=1,padx=5,pady=5)
 sequence_number_entry.bind("<KeyRelease>", set_seqeunce_number)
