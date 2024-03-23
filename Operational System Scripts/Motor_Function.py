@@ -97,13 +97,13 @@ def set_step_speed_rotate(speed_rotate):
 def move_home():
     GPIO.output(VERTICAL_DIR_PIN, DOWN)
     while GPIO.input(BOTTOM_ENDSTOP_PIN) == GPIO.HIGH:
-        step(VERTICAL_STEP_PIN)
+        step_vertical(VERTICAL_STEP_PIN)
 
 # Move top position 
 def move_top():
     GPIO.output(VERTICAL_DIR_PIN, UP)
     while GPIO.input(TOP_ENDSTOP_PIN) == GPIO.HIGH:
-        step(VERTICAL_STEP_PIN)
+        step_vertical(VERTICAL_STEP_PIN)
 
 # Move to set distance
 def move_distance(new_distance, current_distance):

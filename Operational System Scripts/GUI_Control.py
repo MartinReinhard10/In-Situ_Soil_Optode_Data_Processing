@@ -36,7 +36,7 @@ motor_control.grid(row=1,column=1, padx=1, pady=1)
 #tk.Label(main_frame,text="Manual Motor Controls:", font="Arial").grid(row=0,column=1,padx=5,pady=5)
 
 # Set Step Speed VERTICAL
-def set_step_speed_vertical(speed_vertical):
+def set_step_speed_vertical(event):
     mf.set_step_speed_vertical(speed_scale_vertical.get())
 speed_label_vertical = tk.Label(motor_control, text="Vertical Speed Control (Fast --> Slow):").grid(row=0,column=0,padx=1,pady=1)
 speed_scale_vertical = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL)
@@ -45,16 +45,16 @@ speed_scale_vertical.grid(row=0,column=1,padx=1,pady=1)
 speed_scale_vertical.bind("<ButtonRelease-1>", set_step_speed_vertical)
 
 # Set Step Speed ROTATE
-def set_step_speed_rotate(speed_rotate):
+def set_step_speed_rotate(event):
     mf.set_step_speed_rotate(speed_scale_rotate.get())
 speed_label_rotate = tk.Label(motor_control, text="Rotate Speed Control (Fast --> Slow):").grid(row=3,column=0,padx=1,pady=1)
-speed_scale_rotate = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL,length=100)
+speed_scale_rotate = tk.Scale(motor_control, from_=0.0005, to=0.001, resolution=0.0001, orient=tk.HORIZONTAL,length=100)
 speed_scale_rotate.configure(length=200)
 speed_scale_rotate.grid(row=3,column=1,padx=1,pady=1)
 speed_scale_rotate.bind("<ButtonRelease-1>", set_step_speed_rotate)
 
 # Create the vertical motor control frame
-def set_steps_vertical(steps_v):
+def set_steps_vertical(event):
     mf.set_steps_vertical(vertical_steps_entry.get())
 vertical_direction_button = tk.Button(motor_control, text="Down", command=lambda: mf.move_vertical_DOWN(mf.num_steps_vertical)).grid(row=2,column=0,padx=1,pady=1)
 vertical_direction_button = tk.Button(motor_control, text="Up", command=lambda: mf.move_vertical_UP(mf.num_steps_vertical)).grid(row=2,column=1,padx=1,pady=1)
@@ -64,7 +64,7 @@ vertical_steps_entry.grid(row=1,column=1,padx=1,pady=1)
 vertical_steps_entry.bind("<KeyRelease>", set_steps_vertical)
 
 # Create the rotate motor control frame
-def set_steps_horizontal(steps_h):
+def set_steps_horizontal(event):
     mf.set_steps_horizontal(horizontal_steps_entry.get())
 horizontal_direction_button = tk.Button(motor_control, text="Left", command=lambda:mf.rotate_LEFT(mf.num_steps_horizontal)).grid(row=5,column=0,padx=1,pady=1)
 horizontal_direction_button = tk.Button(motor_control, text="Right", command=lambda: mf.rotate_RIGHT(mf.num_steps_horizontal)).grid(row=5,column=1,padx=1,pady=1)

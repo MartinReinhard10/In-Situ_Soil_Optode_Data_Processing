@@ -7,19 +7,25 @@ def measurement_sequence(vert_range, horiz_range, vert_overlap, horiz_overlap, v
     """lobal rotate_right 
     rotate_right = True"""
     
-    for i in range(horiz_range-1):
-        for j in range(vert_range):
+    for i in range(horiz_range):
+        for j in range(vert_range-1):
             if vert_direction == True:
                 sleep(2)
                 cf.capture_measurements(exposure,iso,seq_num)
+                sleep(2)
                 mf.move_vertical_UP(vert_overlap)
             else:
                 sleep(2)
                 cf.capture_measurements(exposure,iso,seq_num)
+                sleep(2)
                 mf.move_vertical_DOWN(vert_overlap)
+        sleep(2)
         cf.capture_measurements(exposure,iso,seq_num)
         vert_direction = not vert_direction
-        mf.rotate_LEFT(horiz_overlap)
+        sleep(2)
+        if i != horiz_range - 1:  
+            mf.rotate_LEFT(horiz_overlap)
+            
 
     # Remove Comment out if all images should be captured horizontally first before vertical movement 
     """for i in range(vert_range):
