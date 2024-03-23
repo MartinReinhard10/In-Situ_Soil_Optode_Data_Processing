@@ -19,7 +19,7 @@ root.title("Controls")
 main_frame = tk.Frame(root, width=1000, height=1000)
 main_frame.grid(row=0, column=0,padx=20,pady=20)
 
-exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20), command=exit_app).grid(row=1,column=5,padx=5,pady=5)
+exit_button = tk.Button(main_frame, text="Exit", fg="red", font=("Arial",20), command=exit_app).grid(row=0,column=4)
 
 # Message window
 def display_message(message):
@@ -27,12 +27,12 @@ def display_message(message):
     text_widget.see('end')  # Auto-scroll to the end
 
 #text_widget_label = tk.Label(main_frame, text= "System Messages:", font="Arial").grid(row=0,column=4,padx=5,pady=5)
-text_widget = tk.Text(main_frame, height=20, width=20)
-text_widget.grid(row=1, column=4, padx=2, pady=5)
+text_widget = tk.Text(main_frame, height=20, width=10)
+text_widget.grid(row=1, column=4)
 
 #Manual motor control Frame
 motor_control=tk.Frame(main_frame,width=500,height=500)
-motor_control.grid(row=1,column=1, padx=10, pady=10)
+motor_control.grid(row=1,column=1, padx=1, pady=1)
 #tk.Label(main_frame,text="Manual Motor Controls:", font="Arial").grid(row=0,column=1,padx=5,pady=5)
 
 # Set Step Speed VERTICAL
@@ -48,7 +48,7 @@ speed_scale_vertical.bind("<ButtonRelease-1>", set_step_speed_vertical)
 def set_step_speed_rotate(speed_rotate):
     mf.set_step_speed(speed_scale_rotate.get())
 speed_label_rotate = tk.Label(motor_control, text="Rotate Speed Control (Fast --> Slow):").grid(row=3,column=0,padx=1,pady=1)
-speed_scale_rotate = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL)
+speed_scale_rotate = tk.Scale(motor_control, from_=0.0001, to=0.0009, resolution=0.0001, orient=tk.HORIZONTAL,length=100)
 speed_scale_rotate.configure(length=200)
 speed_scale_rotate.grid(row=3,column=1,padx=1,pady=1)
 speed_scale_rotate.bind("<ButtonRelease-1>", set_step_speed_rotate)
@@ -112,9 +112,9 @@ camera_frame.grid(row=1,column=2,padx=10,pady=10)
 #camera_frame_title = tk.Label(main_frame, text= "Camera Functions:",font="Arial").grid(row=0,column=2,padx=5,pady=5)
 preview_button = tk.Button(camera_frame, text="Start Live Preview", command=cf.start_preview).grid(row=1,column=0,padx=5,pady=5)
 stop_preview_button = tk.Button(camera_frame,text="Stop Live Preview", command=cf.stop_preview).grid(row=1,column=1,padx=5,pady=5)
-camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image (Desktop)", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
+camera_jpeg_button = tk.Button(camera_frame, text="Capture JPEG Image", command= cf.capture_jpeg).grid(row=2,column=0,padx=5,pady=5)
 camera_raw_button = tk.Button(camera_frame, text="Capture RAW Image", command=lambda: cf.capture_raw(exposure_time, iso_value)).grid(row=6,column=0,padx=1,pady=1)
-camera_raw_background_button = tk.Button(camera_frame, text="RAW image (UV-LED OFF)", command=lambda: cf.capture_raw_background(exposure_time, iso_value)).grid(row=7,column=0,padx=1,pady=1)
+camera_raw_background_button = tk.Button(camera_frame, text="RAW image (UV-LED OFF)", command=lambda: cf.capture_raw_background(exposure_time, iso_value)).grid(row=6,column=1,padx=1,pady=1)
 
 
 # Camera Settings: Exposure and ISO
@@ -178,7 +178,7 @@ white_label.grid(row=0,column=1,padx=5,pady=5)
 white_button =tk.Button(camera_frame,text="Toggle White LED:", command=toggle_white_led_state).grid(row=0,column=0,padx=5,pady=5)
 
 #Show Histogram 
-histogram_button = tk.Button(camera_frame, text= " Save RAW Histogram", command=cf.display_histogram).grid(row=6,column=1, padx=1,pady=1 )
+histogram_button = tk.Button(camera_frame, text= " Save RAW Histogram", command=cf.display_histogram).grid(row=7,column=0, padx=1,pady=1 )
 
 #Capture Calibration images 
 
@@ -201,20 +201,20 @@ def capture_calibration_images():
     cf.capture_calibration(o2_value, num_images, exposure_time, iso_value, delay_time)
     display_message("Image Sequence Completed.\n")
 
-o2_label = tk.Label(camera_frame, text="Set Image Name:").grid(row=10,column=0,padx=1,pady=1)
+o2_label = tk.Label(camera_frame, text="Set Image Name:").grid(row=11,column=0,padx=1,pady=1)
 o2_entry = tk.Entry(camera_frame)
-o2_entry.grid(row=10,column=1,padx=1,pady=1)
+o2_entry.grid(row=11,column=1,padx=1,pady=1)
 o2_entry.bind("<KeyRelease>", set_o2)
-delay_time_label = tk.Label(camera_frame, text="Set Delay Between Images:").grid(row=9,column=0,padx=1,pady=1)
+delay_time_label = tk.Label(camera_frame, text="Set Delay Between Images:").grid(row=10,column=0,padx=1,pady=1)
 delay_time_entry = tk.Entry(camera_frame)
 delay_time_entry.grid(row=9,column=1,padx=1,pady=1)
 delay_time_entry.bind("<KeyRelease>", set_delay)
-num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=8,column=0, padx=1,pady=1 )
+num_images_label = tk.Label(camera_frame, text="Enter Number of Images:").grid(row=9,column=0, padx=1,pady=1 )
 num_images_entry = tk.Entry(camera_frame)
-num_images_entry.grid(row=8,column=1, padx=1,pady=1 )
+num_images_entry.grid(row=9,column=1, padx=1,pady=1 )
 num_images_entry.bind("<KeyRelease>", set_image_number)
-capture_calibration_button = tk.Button(camera_frame, text="Capture Image Sequence", command=capture_calibration_images).grid(row=11,column=0,padx=10,pady=10)
-capture_calibration_label = tk.Label(camera_frame,text="Sequence Settings:", font=8).grid(row=7,column=0,padx=10,pady=10)
+capture_calibration_button = tk.Button(camera_frame, text="Capture Image Sequence", command=capture_calibration_images).grid(row=12,column=0,padx=10,pady=10)
+capture_calibration_label = tk.Label(camera_frame,text="Sequence Settings:", font=8).grid(row=8,column=0,padx=10,pady=10)
 
 
 #Measurements Sequence
