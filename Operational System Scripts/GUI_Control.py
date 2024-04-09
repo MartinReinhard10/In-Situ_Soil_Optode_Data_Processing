@@ -220,8 +220,8 @@ capture_calibration_label = tk.Label(camera_frame,text="Sequence Settings:", fon
 #Measurements Sequence
 
 #Camera field of view in cm
-fov_x = 3.3 
-fov_y = 2.5
+fov_x = 3.6 
+fov_y = 2.7
 #Camera field of view in steps
 fov_x_steps = round(fov_x * 407.5)
 fov_y_steps = round(fov_y * 800)
