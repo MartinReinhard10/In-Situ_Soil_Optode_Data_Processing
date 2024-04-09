@@ -320,6 +320,7 @@ def image_range():
     hori_image_range = round(hori_range/hori_overlap)
     vert_image_range = round(vert_range/vert_overlap)
     if hori_image_range == 0:
+        hori_image_range = 1
         num_images_seq = vert_image_range
     else:
         num_images_seq = round(hori_image_range * vert_image_range)
