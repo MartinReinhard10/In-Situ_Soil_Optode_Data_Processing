@@ -103,7 +103,7 @@ Ball Bearings 8x22x7mm (x4)
     Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.
     (https://leefilters.com/colour/821-zircon-uv-blue-blocker/)    
 
-Wires
+Wiring
 
 Dupont Wire Pin Header Connectors
 
@@ -113,13 +113,4 @@ Cable Ties
 
 Bolts and Nuts for Assembly
 
----
-The total spending budget for this system is approx. **510 EUR.**
----
 
-# Wiring Diagram
-
-![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/Wiring%20sketch%20Raspberry%20Pi%204%202.0_Edit.png)
-
-![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231106_093456066.jpg) 
-![Image Alt text](https://github.com/MartinReinhard10/In-Situ-Soil_Optode/blob/main/Images/PXL_20231115_152306121.jpg)
