@@ -16,9 +16,7 @@ File (.step) with full 3D model of the system can be provided if needed.
 - **Raspberry Pi 4 Model B 4 GB RAM**
     
     [Raspberry Pi Documentation - Computers](https://www.raspberrypi.com/documentation/computers/)
-    
-    [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
-    
+        
     [Armor Aluminium Heatsink Case for Raspberry Pi 4 • RaspberryPi.dk](https://raspberrypi.dk/en/product/armor-aluminium-heatsink-case-for-raspberry-pi-4/)
     
 - **Raspberry Pi HQ Camera**
@@ -76,11 +74,12 @@ File (.step) with full 3D model of the system can be provided if needed.
     [LM2596 Buck Converter Datasheet, Pinout, Features, Applications - The Engineering Projects](https://www.theengineeringprojects.com/2020/09/lm2596-buck-converter-datasheet-pinout-features-applications.html)
     
 - **12V Cooling Fan (60x60x10mm)**
+- 
 - **Slip Ring**
     
     [SNF-3P%20updated.pdf](https://cdn.sparkfun.com/datasheets/Robotics/SNF-3P%20updated.pdf)
     
-- **Power supply - 12V 5A**
+- **Power supply - 12V 5A + adapter (DC 5,50 x 2,10 - female to 2-pin terminal block)**
 
 ---
 
@@ -109,14 +108,12 @@ Ball Bearings 8x22x7mm (x4)
     Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.
     (https://leefilters.com/colour/821-zircon-uv-blue-blocker/)    
 
-Wirinf - See Wiring Diagram
+Wiring - See Wiring Diagram
 
 Dupont Wire Pin Header Connectors
 
-Cable Connectors
-
 Cable Ties
 
-Bolts and Nuts for Assembly - see list of nuts & bolts
+Bolts and Nuts for Assembly - See list of nuts & bolts
 
 
