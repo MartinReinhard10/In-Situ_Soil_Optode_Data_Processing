@@ -1,8 +1,13 @@
+This repository is to function as supplementary material for the paper "A Novel and Low-cost Concept for In-Situ Applications of Planar Optodes in Soils"
+Please find a subset of the image data used in the paper in this repository. Additional image data can be provided on request.
+
+# All requests or questions regarding the repository should be directed at: martinreinhard@bio.au.dk
+---
+
 # System Hardware
+This is a list of electronic, mechanical, and other components used in the OptodeSystem, including a Raspberry Pi 4, HQ Camera, UV-LED, stepper motors, and various sensors. The document also includes a wiring diagram and links to additional resources for each component.
 
-This document provides a list of electronic, mechanical, and other components used in the OptodeSystem, including a Raspberry Pi 4, HQ Camera, UV-LED, stepper motors, and various sensors. The document also includes a wiring diagram and links to additional resources for each component.
-
-.step file with full 3D model of the system can be provided if needed.
+File (.step) with full 3D model of the system can be provided if needed.
 ---
 
 # Electronic Components
@@ -103,7 +108,7 @@ Ball Bearings 8x22x7mm (x4)
     Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.
     (https://leefilters.com/colour/821-zircon-uv-blue-blocker/)    
 
-Wiring
+Wirinf - See Wiring Diagram
 
 Dupont Wire Pin Header Connectors
 
@@ -111,6 +116,6 @@ Cable Connectors
 
 Cable Ties
 
-Bolts and Nuts for Assembly
+Bolts and Nuts for Assembly - see list of nuts & bolts
 
 
