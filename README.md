@@ -1,8 +1,14 @@
+This repository is to function as supplementary material for the paper "A Novel and Low-cost Concept for In-Situ Applications of Planar Optodes in Soils"
+
+Please find a subset of the image data and the Python scripts used in image processing for the paper in this repository. Additional image data and can be provided on request.
+
+# All requests or questions regarding the repository should be directed at: martinreinhard@bio.au.dk
+---
+
 # System Hardware
+This is a list of electronic, mechanical, and other components used in the OptodeSystem, including a Raspberry Pi 4, HQ Camera, UV-LED, stepper motors, and various sensors. The document also includes a wiring diagram and links to additional resources for each component.
 
-This document provides a list of electronic, mechanical, and other components used in the OptodeSystem, including a Raspberry Pi 4, HQ Camera, UV-LED, stepper motors, and various sensors. The document also includes a wiring diagram and links to additional resources for each component.
-
-.step file with full 3D model of the system can be provided if needed.
+File (.step) with full 3D model of the system can be provided if needed.
 ---
 
 # Electronic Components
@@ -10,9 +16,7 @@ This document provides a list of electronic, mechanical, and other components us
 - **Raspberry Pi 4 Model B 4 GB RAM**
     
     [Raspberry Pi Documentation - Computers](https://www.raspberrypi.com/documentation/computers/)
-    
-    [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
-    
+        
     [Armor Aluminium Heatsink Case for Raspberry Pi 4 • RaspberryPi.dk](https://raspberrypi.dk/en/product/armor-aluminium-heatsink-case-for-raspberry-pi-4/)
     
 - **Raspberry Pi HQ Camera**
@@ -70,11 +74,12 @@ This document provides a list of electronic, mechanical, and other components us
     [LM2596 Buck Converter Datasheet, Pinout, Features, Applications - The Engineering Projects](https://www.theengineeringprojects.com/2020/09/lm2596-buck-converter-datasheet-pinout-features-applications.html)
     
 - **12V Cooling Fan (60x60x10mm)**
+- 
 - **Slip Ring**
     
     [SNF-3P%20updated.pdf](https://cdn.sparkfun.com/datasheets/Robotics/SNF-3P%20updated.pdf)
     
-- **Power supply - 12V 5A**
+- **Power supply - 12V 5A + adapter (DC 5,50 x 2,10 - female to 2-pin terminal block)**
 
 ---
 
@@ -103,14 +108,12 @@ Ball Bearings 8x22x7mm (x4)
     Zircon UV Blue Blocker from Lee Filters is used to cover the camera lens.
     (https://leefilters.com/colour/821-zircon-uv-blue-blocker/)    
 
-Wiring
+Wiring - See Wiring Diagram
 
 Dupont Wire Pin Header Connectors
 
-Cable Connectors
-
 Cable Ties
 
-Bolts and Nuts for Assembly
+Bolts and Nuts for Assembly - See list of nuts & bolts
 
 
