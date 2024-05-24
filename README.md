@@ -29,7 +29,7 @@ File (.step) with full 3D model of the system can be provided if needed.
     
 - **UV-LED  -** 395 nm
     
-    [Datasheet UV-LED] (https://www.mouser.dk/datasheet/2/245/Luminus_SST_10_UV_Datasheet-1499199.pdf).
+    [Datasheet UV-LED](https://www.mouser.dk/datasheet/2/245/Luminus_SST_10_UV_Datasheet-1499199.pdf)
       
 - **Resistor** - HS25 18R
     
