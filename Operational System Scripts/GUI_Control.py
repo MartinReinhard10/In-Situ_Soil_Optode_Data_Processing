@@ -178,7 +178,7 @@ white_label.grid(row=0,column=1,padx=5,pady=5)
 white_button =tk.Button(camera_frame,text="Toggle White LED:", command=toggle_white_led_state).grid(row=0,column=0,padx=5,pady=5)
 
 #Show Histogram 
-histogram_button = tk.Button(camera_frame, text= " Save RAW Histogram", command=cf.display_histogram).grid(row=7,column=0, padx=1,pady=1 )
+histogram_button = tk.Button(camera_frame, text= " Histogram + Column Ratio ", command=cf.display_histogram).grid(row=7,column=0, padx=1,pady=1 )
 
 #Capture Calibration images 
 
@@ -388,11 +388,11 @@ def set_seqeunce_number(seq_num_trigger):
 mearsurement_frame = tk.Frame(main_frame,width=200,height=500)
 mearsurement_frame.grid(row=1,column=3,padx=1,pady=1)
 mearsurement_frame_title = tk.Label(main_frame, text="Measurement Sequence:",font="Arial").grid(row=0,column=3,padx=5,pady=5)
-horizontal_view_label = tk.Label(mearsurement_frame,text="Set horizontal Frames (1 = 3.3 cm):").grid(row=0,column=0,padx=1,pady=1)
+horizontal_view_label = tk.Label(mearsurement_frame,text="Set horizontal Frames (1 = 3.6 cm):").grid(row=0,column=0,padx=1,pady=1)
 horizontal_view_entry = tk.Entry(mearsurement_frame)
 horizontal_view_entry.grid(row=0,column=1,padx=5,pady=5)
 horizontal_view_entry.bind("<KeyRelease>", set_horizontal_step_range)
-vertical_view_label = tk.Label(mearsurement_frame,text="Set vertical Frames (1 = 2.5 cm):").grid(row=1,column=0,padx=1,pady=1)
+vertical_view_label = tk.Label(mearsurement_frame,text="Set vertical Frames (1 = 2.7 cm):").grid(row=1,column=0,padx=1,pady=1)
 vertical_view_entry = tk.Entry(mearsurement_frame)
 vertical_view_entry.grid(row=1,column=1,padx=5,pady=5)
 vertical_view_entry.bind("<KeyRelease>",set_verticale_step_range)
