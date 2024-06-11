@@ -1,5 +1,7 @@
 This repository is to function as supplementary material for the paper "A Novel and Low-cost Concept for In-Situ Applications of Planar Optodes in Soils"
 
+For Python scripts regarding operating the imaging system please refer to the repository: https://github.com/MartinReinhard10/Operate_In-Situ_Soil_Optode
+
 Please find a subset of the image data and the Python scripts used in image processing for the paper in this repository. Additional image data and can be provided on request.
 
 # All requests or questions regarding the repository should be directed at: martinreinhard@bio.au.dk
